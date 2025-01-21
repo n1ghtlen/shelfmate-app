@@ -1,13 +1,28 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { View, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+function WelcomeScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={styles.welcome}>Welcome!</Text>
+      <View style={styles.bottomTextContainer}>
+        <Text style={styles.bottomText}>tap to continue</Text>
+    </View>
+  </View>
+  );
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <NavigationContainer>
+      <WelcomeScreen />
+    </NavigationContainer>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -16,5 +31,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  welcome: {
+    fontSize: 34,
+    fontWeight: 'bold',
+    color: '#A86000',
+    textAlign: 'center',
+  },
+  bottomTextContainer: {
+    position: 'absolute', // Position the text at the bottom
+    bottom: 40, // Adjust the distance from the bottom as needed
+    alignItems: 'center',
+  },
+  bottomText: {
+    fontSize: 18,
+    fontWeight: 'normal',
+    color: '#555', // A softer color for the "Tap to Continue"
+    textAlign: 'center',
   },
 });
