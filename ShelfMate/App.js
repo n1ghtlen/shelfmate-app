@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 function WelcomeScreen({ navigation }) {
