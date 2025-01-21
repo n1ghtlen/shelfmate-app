@@ -39,14 +39,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   bottomTextContainer: {
-    position: 'absolute', // Position the text at the bottom
-    bottom: 40, // Adjust the distance from the bottom as needed
+    position: 'absolute',
+    bottom: 40,
     alignItems: 'center',
   },
   bottomText: {
     fontSize: 18,
     fontWeight: 'normal',
-    color: '#555', // A softer color for the "Tap to Continue"
+    color: '#555',
     textAlign: 'center',
   },
 });
