@@ -1,13 +1,27 @@
 import { React, useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, ScrollView, View, Text, Button, ActivityIndicator } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, ScrollView, View, Text, TextInput, Button, ActivityIndicator } from 'react-native';
 import styles from './styles';
 
-function HomeScreen({ navigation }) {
+function HomeScreen() {
+    const [searchQuery, setSearchQuery] = useState(''); //state to store the search query
+
     return (
-        <View style={styles.container}>
-            <Text>
-            This is the home screen
-            </Text>
+        <View>
+            <View style={styles.inputBox}>
+                <TextInput
+                    style={styles.inputText}
+                    value={searchQuery}
+                    onChangeText={(text) => setSearchQuery(text)}
+                    placeholder="Search item..."
+                    autoCapitalize="none"
+                />
+            </View>
+            <View style={styles.container}>
+                <Image
+                    source={require('./pantry-shelf.png')}
+                    style={styles.pantry}
+                />
+            </View>
         </View>
     )
 }

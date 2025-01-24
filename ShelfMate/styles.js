@@ -27,6 +27,15 @@ const styles = StyleSheet.create({
     height: 200,
     objectFit: 'contain',
   },
+  pantry: { // using padding & margin might be better to handle layout, but not sure how
+    width: 350,
+    height: 400,
+    //marginBottom: 48,
+    //marginTop: 48,
+    //marginLeft: 32,
+    //marginRight: 32,
+    objectFit: 'contain',
+  },
   bottomTextContainer: {
     position: 'absolute',
     bottom: 40,
