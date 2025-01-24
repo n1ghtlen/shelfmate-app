@@ -28,7 +28,7 @@ function LoginScreen({ navigation }) {
                     <TextInput
                         style={styles.inputText}
                         value={username}
-                        onChangeText={(text) => setUsername(text)}
+                        onChangeText={(text) => setPassword(text)}
                         placeholder="Enter your password"
                         autoCapitalize="none"
                     />

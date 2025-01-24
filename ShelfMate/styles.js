@@ -17,9 +17,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingBottom: 200,
   },
-  image: { // space between image and text
+  logo: {
     width: 300,
     height: 300,
+    objectFit: 'contain',
+  },
+  image: { // space between image and text
+    width: 200,
+    height: 200,
     objectFit: 'contain',
   },
   bottomTextContainer: {
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: 'bold',
     paddingTop: 20,
-    marginBottom: 80,
+    marginBottom: 50,
   },
   inputBox: {
     height: 40,

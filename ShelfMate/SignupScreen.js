@@ -27,8 +27,17 @@ function SignupScreen({ navigation }) {
                     <TextInput
                         style={styles.inputText}
                         value={username}
-                        onChangeText={(text) => setUsername(text)}
+                        onChangeText={(text) => setPassword(text)}
                         placeholder="Create a password"
+                        autoCapitalize="none"
+                    />
+                </View>
+                <View style={styles.inputBox}>
+                    <TextInput
+                        style={styles.inputText}
+                        value={username}
+                        onChangeText={(text) => setPassword(text)}
+                        placeholder="Confirm password"
                         autoCapitalize="none"
                     />
                 </View>

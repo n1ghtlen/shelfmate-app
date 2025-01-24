@@ -11,7 +11,7 @@ function WelcomeScreen({ navigation }) {
     >
       <Image
         source={require('./logo.png')}
-        style={styles.image}
+        style={styles.logo}
       />
     
       <Image
