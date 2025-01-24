@@ -5,7 +5,7 @@ import styles from './styles';
 function HomeScreen({ navigation }) {
     return (
         <View style={styles.container}>
-            <Text styles = {'textAlign: center'}>
+            <Text>
             This is the home screen
             </Text>
         </View>
