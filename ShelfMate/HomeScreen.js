@@ -1,9 +1,8 @@
 import { React, useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, ScrollView, View, Text, Button, ActivityIndicator } from 'react-native';
+import styles from './styles';
 
-function HomeScreen({ route, navigation }) {
-    const { styles } = route.params; // Access styles passed from navigation
-
+function HomeScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <Text styles = {'textAlign: center'}>

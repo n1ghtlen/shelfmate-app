@@ -1,11 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, Image, Text, View } from 'react-native';
+import styles from './styles';
 
 // Welcome Screen Component
-function WelcomeScreen({ route, navigation }) {
-  // accesses the styles passed from App.js
-  const { styles } = route.params;
-
+function WelcomeScreen({ navigation }) {
   return (
     <TouchableOpacity
       style={styles.container}

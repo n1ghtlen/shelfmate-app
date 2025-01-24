@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import { TouchableOpacity, Image, Text, View, TextInput, Button } from 'react-native';
+import styles from './styles';
 
-function LoginScreen({ route, navigation }) {
-    const { styles } = route.params; // Access styles passed from navigation
+function LoginScreen({ navigation }) {
 
     const [username, setUsername] = useState(''); // State to store the username input
 

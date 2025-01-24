@@ -1,9 +1,10 @@
 import {React, useState } from 'react';
 import { View, Text, Button, ScrollView } from 'react-native';
 import { Checkbox } from 'expo-checkbox';
+import styles from './styles';
 
 // Dietary Restrictions Question Component
-function DietaryRestrictionsQuestion({ styles, navigation }) {
+function DietaryRestrictionsQuestion({ navigation }) {
   const [selectedOptions, setSelectedOptions] = useState({
     option1: false,
     option2: false,
@@ -139,8 +140,7 @@ function DietaryRestrictionsQuestion({ styles, navigation }) {
 }
 
 // Questionnaire Screen (Main component)
-function QuestionnaireScreen({ route, navigation }) {
-  const { styles } = route.params; // Access styles from navigation params
+function QuestionnaireScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
