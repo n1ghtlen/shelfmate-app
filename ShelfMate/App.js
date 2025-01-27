@@ -22,6 +22,7 @@ import QuestionnaireScreen from "./QuestionnaireScreen";
 import LoginScreen from "./LoginScreen";
 import SignupScreen from "./SignupScreen";
 import HomeScreen from "./HomeScreen";
+import RecipeScreen from "./RecipeScreen";
 import styles from "./styles";
 
 // Tab Navigator for Home Screen

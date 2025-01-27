@@ -5,8 +5,6 @@ import {
   Image,
   Text,
   View,
-  TextInput,
-  Button,
   Dimensions,
   ScrollView,
 } from "react-native";
@@ -14,40 +12,65 @@ import styles from "./styles";
 
 const { width } = Dimensions.get("window");
 
-const images = [
-  require("./assets/"),
-  require("./assets/"),
-  require("./assets/"),
+const savedImages = [
+  { source: require("./cinnamon-roll.jpg"), title: "Recipe 1" },
+  { source: require("./dulce-de-leche.jpg"), title: "Recipe 2" },
+  { source: require("./turkish-coffee.jpg"), title: "Recipe 3" },
 ];
 
-const ScrollableImagePage = () => {
+const availableImages = [
+  { source: require("./cinnamon-roll.jpg"), title: "Recipe 4" },
+  { source: require("./dulce-de-leche.jpg"), title: "Recipe 5" },
+  { source: require("./turkish-coffee.jpg"), title: "Recipe 6" },
+];
+
+const RecipeScreen = ({ navigation }) => {
   return (
-    <ScrollView
-      horizontal
-      pagingEnabled
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.scrollViewContent}
-    >
-      {images.map((image, index) => (
-        <Image
-          key={index}
-          source={image}
-          style={styles.image}
-          resizeMode="cover"
-        />
-      ))}
-    </ScrollView>
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.backButton}>Back</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Recipes</Text>
+      </View>
+
+      {/* Saved Recipes Section */}
+      <Text style={styles.sectionTitle}>Saved Recipes</Text>
+      <ScrollView
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollViewContent}
+      >
+        {savedImages.map((image, index) => (
+          <View key={index} style={styles.imageContainer}>
+            <Image
+              source={image.source}
+              style={styles.image}
+              resizeMode="cover"
+            />
+            <Text style={styles.imageTitle}>{image.title}</Text>
+          </View>
+        ))}
+      </ScrollView>
+
+      {/* Available Recipes Section */}
+      <Text style={styles.sectionTitle}>Available Recipes</Text>
+      <ScrollView contentContainerStyle={styles.gridContainer}>
+        {availableImages.map((image, index) => (
+          <View key={index} style={styles.gridItem}>
+            <Image
+              source={image.source}
+              style={styles.gridImage}
+              resizeMode="cover"
+            />
+            <Text style={styles.imageTitle}>{image.title}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  scrollViewContent: {
-    flexDirection: "row",
-  },
-  image: {
-    width: width,
-    height: "100%",
-  },
-});
-
-export default ScrollableImagePage;
+export default RecipeScreen;
