@@ -35,10 +35,6 @@ const styles = StyleSheet.create({
     // using padding & margin might be better to handle layout, but not sure how
     width: 350,
     height: 400,
-    //marginBottom: 48,
-    //marginTop: 48,
-    //marginLeft: 32,
-    //marginRight: 32,
     objectFit: "contain",
   },
   bottomTextContainer: {
@@ -119,6 +115,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingTop: 20,
     marginBottom: 50,
+  },
+  searchBox: {
+    height: 40,
+    borderColor: "#ccc",
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderRadius: 5,
+    width: "90%",
+    paddingLeft: 10,
+    marginTop: 50,
+    marginBottom: -150,
   },
   inputBox: {
     height: 40,

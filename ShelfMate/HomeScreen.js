@@ -6,8 +6,8 @@ function HomeScreen() {
     const [searchQuery, setSearchQuery] = useState(''); //state to store the search query
 
     return (
-        <View>
-            <View style={styles.inputBox}>
+        <View style={styles.container}>
+            <View style={styles.searchBox}>
                 <TextInput
                     style={styles.inputText}
                     value={searchQuery}
