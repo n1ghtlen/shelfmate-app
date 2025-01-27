@@ -76,9 +76,9 @@ function App() {
           initialParams={{ styles }}
         />
         <Stack.Screen
-          name="Recipes"
-          component={RecipeScreen}
-          initialParams={{ styles }}
+            name="Recipes"
+            component={RecipeScreen}
+            initialParams={{ styles }}
         />
       </Stack.Navigator>
     </NavigationContainer>

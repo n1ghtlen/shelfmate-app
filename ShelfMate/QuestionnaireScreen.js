@@ -4,7 +4,7 @@ import { Checkbox } from 'expo-checkbox';
 import styles from './styles';
 
 // Dietary Restrictions Question Component
-function DietaryRestrictionsQuestion({ navigation }) {
+function DietaryRestrictionsQuestion({ navigation, styles }) {
   const [selectedOptions, setSelectedOptions] = useState({
     option1: false,
     option2: false,
@@ -27,102 +27,34 @@ function DietaryRestrictionsQuestion({ navigation }) {
   };
 
   return (
-    <View>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        {/* Q1 Dietary Restrictions Question */}
+    <View style= {{ flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.questionScrollViewContent}>
         <Text style={styles.questionText}>
-          Do you have any of the below dietary restrictions or allergies?
+          Do you have any of the following dietary restrictions or allergies?
         </Text>
 
-        {/* Q1 Answer Options */}
         <View style={styles.optionsContainer}>
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option1}
-              onValueChange={() => handleCheckboxToggle('option1')}
-            />
-            <Text style={styles.optionText}>Vegan</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option2}
-              onValueChange={() => handleCheckboxToggle('option2')}
-            />
-            <Text style={styles.optionText}>Vegetarian</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option3}
-              onValueChange={() => handleCheckboxToggle('option3')}
-            />
-            <Text style={styles.optionText}>Keto</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option4}
-              onValueChange={() => handleCheckboxToggle('option4')}
-            />
-            <Text style={styles.optionText}>Gluten-free</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option5}
-              onValueChange={() => handleCheckboxToggle('option5')}
-            />
-            <Text style={styles.optionText}>Lactose-free</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option6}
-              onValueChange={() => handleCheckboxToggle('option6')}
-            />
-            <Text style={styles.optionText}>Kosher</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option7}
-              onValueChange={() => handleCheckboxToggle('option7')}
-            />
-            <Text style={styles.optionText}>Wheat allergy</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option8}
-              onValueChange={() => handleCheckboxToggle('option8')}
-            />
-            <Text style={styles.optionText}>Nut allergy</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option9}
-              onValueChange={() => handleCheckboxToggle('option9')}
-            />
-            <Text style={styles.optionText}>Shellfish allergy</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option10}
-              onValueChange={() => handleCheckboxToggle('option10')}
-            />
-            <Text style={styles.optionText}>Egg allergy</Text>
-          </View>
-
-          <View style={styles.option}>
-            <Checkbox
-              value={selectedOptions.option11}
-              onValueChange={() => handleCheckboxToggle('option11')}
-            />
-            <Text style={styles.optionText}>Soy allergy</Text>
-          </View>
+          {[
+            'Vegan',
+            'Vegetarian',
+            'Keto',
+            'Gluten-free',
+            'Lactose-free',
+            'Kosher',
+            'Wheat allergy',
+            'Nut allergy',
+            'Shellfish allergy',
+            'Egg allergy',
+            'Soy allergy',
+          ].map((option, index) => (
+            <View key={index} style={styles.option}>
+              <Checkbox
+                value={selectedOptions[`option${index + 1}`]}
+                onValueChange={() => handleCheckboxToggle(`option${index + 1}`)}
+              />
+              <Text style={styles.optionText}>{option}</Text>
+            </View>
+          ))}
         </View>
       </ScrollView>
 
@@ -139,17 +71,16 @@ function DietaryRestrictionsQuestion({ navigation }) {
   );
 }
 
-// Questionnaire Screen (Main component)
+// Main Questionnaire Screen
 function QuestionnaireScreen({ navigation }) {
-
   return (
-    <View style={styles.container}>
+    <View style={styles.questionnaireContainer}>
       <View style={styles.topTextBackground}>
         <Text style={styles.topText}>
           Welcome to ShelfMate! Please answer the following questions to tailor your experience.
         </Text>
       </View>
-      <DietaryRestrictionsQuestion styles={styles} navigation={navigation} /> {/* Passing styles to the component */}
+      <DietaryRestrictionsQuestion styles={styles} navigation={navigation} />
     </View>
   );
 }

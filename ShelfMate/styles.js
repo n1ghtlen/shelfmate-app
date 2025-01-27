@@ -8,8 +8,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  questionnaireContainer: {
+    alignItems: 'center',
+    flex: 1,
   },
   welcome: {
     fontSize: 34,
@@ -24,10 +28,8 @@ const styles = StyleSheet.create({
     objectFit: "contain",
   },
   image: {
-    // space between image and text
-    width: 200,
-    height: 200,
-    objectFit: "contain",
+    width: 300,
+    height: 300,
   },
   pantry: {
     // using padding & margin might be better to handle layout, but not sure how
@@ -51,21 +53,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   topTextBackground: {
-    width: "100%",
-    height: "25%",
-    backgroundColor: "#025400",
-    position: "absolute",
-    top: 0,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#025400',
+    padding: 16, // Add padding inside the background container
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 4, // Add shadow for Android
+    shadowColor: '#000', // Add shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   topText: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#fff",
-    textAlign: "center",
-    padding: 30,
-    marginTop: 30,
+    fontSize: 18, // Set a readable font size
+    fontWeight: 'bold', // Bold text for emphasis
+    color: '#fff', // White text for contrast
+    textAlign: 'center', // Center the text
+    marginTop: 40,
   },
   questionText: {
     color: "#000",
@@ -75,8 +78,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   optionsContainer: {
-    width: "100%",
-    height: "35%",
+
   },
   option: {
     flexDirection: "row",
@@ -87,17 +89,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
   },
-  scrollViewContent: {
-    paddingTop: 230,
+  questionScrollViewContent: {
+    flex: 1,
+    padding: 16, // Add padding inside the scrollable area
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "80%",
-    marginTop: 80,
+    alignItems: 'center', // Centers the button horizontally
+    justifyContent: 'center', // Centers the button vertically (if necessary)
+    padding: 20,
   },
   buttons: {
-    flex: 1,
     width: 120,
     height: 60,
     borderRadius: 20,
