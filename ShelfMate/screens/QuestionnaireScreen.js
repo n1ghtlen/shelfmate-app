@@ -1,7 +1,7 @@
 import {React, useState } from 'react';
 import { View, Text, Button, ScrollView } from 'react-native';
 import { Checkbox } from 'expo-checkbox';
-import styles from './styles';
+import styles from '../styles';
 
 // Dietary Restrictions Question Component
 function DietaryRestrictionsQuestion({ navigation, styles }) {
@@ -62,7 +62,7 @@ function DietaryRestrictionsQuestion({ navigation, styles }) {
         <View style={styles.buttons}>
           <Button
             title="Next"
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('MainApp')}
             color="#fff"
           />
         </View>

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   questionnaireContainer: {
@@ -20,22 +20,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#A86000",
     textAlign: "center",
-    paddingBottom: 200,
   },
   logo: {
     width: 300,
     height: 300,
     objectFit: "contain",
   },
-  image: {
-    width: 300,
-    height: 300,
+  canary: {
+
   },
   pantry: {
-    // using padding & margin might be better to handle layout, but not sure how
-    width: 350,
-    height: 400,
-    objectFit: "contain",
+    width: '200',
+    height: '400', // Makes sure the image fills the available space
+    objectFit: 'contain',
   },
   bottomTextContainer: {
     position: "absolute",
@@ -102,11 +99,24 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "#025400",
   },
+  scanButtonContainer: {
+    alignItems: 'center', // Centers the button horizontally
+    justifyContent: 'center', // Centers the button vertically (if necessary)
+    padding: 20,
+  },
+  scanButtons: {
+    color: 'white',
+  },
+  background: {
+    flex: 1, // This makes sure the ImageBackground covers the entire screen
+    justifyContent: 'center', // Centers content vertically
+    alignItems: 'center', // Centers content horizontally
+  },
   loginBackground: {
     width: "75%",
     height: "60%",
     backgroundColor: "#A86000",
-    borderRadius: 15,
+    borderRadius: 20,
     alignItems: "center",
   },
   loginHeading: {
@@ -125,7 +135,6 @@ const styles = StyleSheet.create({
     width: "90%",
     paddingLeft: 10,
     marginTop: 50,
-    marginBottom: -150,
   },
   inputBox: {
     height: 40,
@@ -141,14 +150,37 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   header: {
+    paddingTop: 60,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 16,
   },
+  backButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',  // Absolute positioning to keep it above the camera
+    top: 40,  // Space from the top of the screen
+    left: 10,  // Space from the left
+    zIndex: 1,  // Make sure it appears above the camera
+    padding: 10,  // Add some padding to the button
+  },
   backButton: {
     fontSize: 18,
     color: "#000",
+  },
+  returnButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',  // Absolute positioning to keep it above the camera
+    top: 40,  // Space from the top of the screen
+    left: 10,  // Space from the left
+    zIndex: 1,  // Make sure it appears above the camera
+    padding: 10,  // Add some padding to the button
+  },
+  returnButton: {
+    fontSize: 18,
+    color: "#fff",
   },
   headerTitle: {
     fontSize: 24,
@@ -198,6 +230,20 @@ const styles = StyleSheet.create({
     height: width * 0.25,
     borderRadius: 10,
   },
+  cameraContainer: {
+    flex: 1, // Allow the container to take up full screen
+    justifyContent: "flex-start", // Start from top for camera view
+    backgroundColor: "black"
+  },
+  camera: {
+    flex: 1, // Make the camera view take up full screen
+    width: "100%", // Ensures the camera takes up the full width
+    height: "100%", // Ensures the camera takes up the full height
+  },
+  scanPrompt: {
+    top: 600,
+    color: '#fff',
+  }
 });
 
 export default styles;
