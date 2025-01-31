@@ -12,22 +12,18 @@ const navigation = useNavigation();
   const [facing, setFacing] = useState("back"); // Facing as string 'back' or 'front'
   const [permission, requestPermission] = useCameraPermissions();
   const [selectedSize, setSelectedSize] = useState(undefined);
-  const [pictureSizes, setPictureSizes] = useState([]); // Initialize empty array for picture sizes
 
   useEffect(() => {
     async function getSizes() {
       console.log("hi!");
       console.log(permission);
       if (permission?.granted && cameraRef.current) {
-        console.log("sized!");
         const sizes = await cameraRef.current.getAvailablePictureSizesAsync();
-        setPictureSizes(sizes);
-        console.log(sizes);
       }
     }
 
     getSizes();
-  }, [permission]);
+  }, );
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -38,7 +34,7 @@ const navigation = useNavigation();
     // Camera permissions are not granted yet.
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: "center" }}>
+        <Text style={{ textAlign: "center", top: 50}}>
           We need your permission to show the camera
         </Text>
         <Button onPress={requestPermission} title="grant permission" />
@@ -50,14 +46,6 @@ const navigation = useNavigation();
     setFacing((current) => (current === "back" ? "front" : "back"));
   }
 
-  async function takePicture() {
-    if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync();
-      console.log('Photo taken:', photo);
-      // You can save the photo here or handle it as you need.
-      // For example, navigating to another screen with the photo or uploading it.
-    }
-  }
 
   return (
     <View style={styles.cameraContainer}>
