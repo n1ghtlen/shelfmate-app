@@ -90,7 +90,10 @@ function ScanScreen() {
 
   return (
     <View style={styles.cameraContainer}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.returnButtonContainer}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.returnButtonContainer}
+      >
         <Text style={styles.returnButton}>Return</Text>
       </TouchableOpacity>
 
