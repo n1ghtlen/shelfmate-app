@@ -15,6 +15,7 @@ function ScanScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [container, setContainer] = useState("pantry");
   const [quantity, setQuantity] = useState(1);
+  const [expirationDate, setExpirationDate] = useState('');
 
   // Request permission when component mounts
   useEffect(() => {
@@ -56,13 +57,46 @@ function ScanScreen() {
     setProductInfo(null); // Clear the previous product info
     setContainer("pantry"); // Reset container to pantry by default
     setQuantity(1); // Reset quantity to 1
+    setExpirationDate(''); // Reset expiration date to empty
   };
 
-  const handleAddToContainer = () => {
-    // Add the product to the selected container with the specified quantity
-    console.log(`Added ${quantity} of ${productInfo.product_name} to the ${container}`);
-    setModalVisible(false); // Close the modal
-    resetScanner(); // Reset scanner to scan another product
+  const handleAddToContainer = async () => {
+    try {
+      // Create a payload to send to the backend
+      const payload = {
+        containerName: container,
+        productName: productInfo.product_name,
+        barcode: productInfo.code,
+        quantity,
+        expirationDate,
+      };
+
+      // Send the request to the backend
+      console.log("Payload being sent:", payload);
+
+      const response = await fetch('http://192.168.1.242:5001/add-item', { // Replace with your backend URL
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        // If the request is successful, show a success message
+        Alert.alert("Success", `Added ${quantity} of ${productInfo.product_name} to the ${container}`);
+        setModalVisible(false); // Close the modal
+        resetScanner(); // Reset scanner for next item
+      } else {
+        // If there's an error, show an alert with the error message
+        Alert.alert("Error", data.message || "Something went wrong!");
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Failed to add item to the container.");
+    }
   };
 
   if (!permission) return <View />;
@@ -147,7 +181,7 @@ function ScanScreen() {
             <Text style={styles.modalTitle}>Add to Container</Text>
             <Text style={styles.modalLabel}>Select Container:</Text>
             <View style={styles.containerOptions}>
-              {["Pantry", "Fridge", "Freezer"].map((containerOption) => (
+              {["pantry", "fridge", "freezer"].map((containerOption) => (
                 <TouchableOpacity
                   key={containerOption}
                   onPress={() => setContainer(containerOption)}
@@ -177,6 +211,12 @@ function ScanScreen() {
                 }
               }}
             />
+            <TextInput
+              style={styles.expirationInput}
+              placeholder="Expiration Date (optional)"
+              value={expirationDate}
+              onChangeText={setExpirationDate}
+            />
             <TouchableOpacity onPress={handleAddToContainer} style={styles.addButton}>
               <Text style={styles.addButtonText}>Add to {container}</Text>
             </TouchableOpacity>
@@ -191,6 +231,7 @@ function ScanScreen() {
 }
 
 export default ScanScreen;
+
 
 
 
