@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
 
   },
   pantry: {
-    width: '200',
-    height: '400', // Makes sure the image fills the available space
+    width: '300',
+    height: '600', // Makes sure the image fills the available space
     objectFit: 'contain',
   },
   bottomTextContainer: {
@@ -176,11 +176,23 @@ const styles = StyleSheet.create({
     top: 40,  // Space from the top of the screen
     left: 10,  // Space from the left
     zIndex: 1,  // Make sure it appears above the camera
-    padding: 10,  // Add some padding to the button
+    // Add some padding
   },
   returnButton: {
     fontSize: 18,
     color: "#fff",
+  },
+  arrowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowText: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    padding: 7,
+    color: '#FFFFFF',
+    backgroundColor: "#048C00",
+    borderRadius: 38,
   },
   headerTitle: {
     fontSize: 24,

@@ -1,24 +1,33 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import { Image, TouchableOpacity, View, Text, TextInput } from 'react-native';
 import styles from '../styles';
 
 function HomeScreen() {
-    const [searchQuery, setSearchQuery] = useState(''); // State to store the search query
-
-    const [imageSource, setImageSource] = useState(require('../assets/pantry-shelf.png')); // State to store the image source
+    const [searchQuery, setSearchQuery] = useState(''); //state to store the search query
+    const pantryImages = [
+        require('../assets/pantry-shelf.png'),
+        require('../assets/pantry-fridge.png'),
+        require('../assets/pantry-freezer.png')
+    ];
+    
+    const [pantryView, setPantryView] = useState(0); //track index of current view
 
     const handleArrowPress = (direction) => {
+        let newIndex = pantryView;
+
         if (direction === 'left') {
-            setImageSource(require('../assets/pantry-fridge.png'));
+            newIndex = (pantryView + 1) % pantryImages.length; //travel forward
         } else if (direction === 'right') {
-            setImageSource(require('../assets/pantry-freezer.png'));
+            newIndex = (pantryView - 1 + pantryImages.length) % pantryImages.length; //travel back
         }
+
+        setPantryView(newIndex);
     };
 
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container}>
-                {/* Search Box */}
+                {/* search box */}
                 <View style={styles.searchBox}>
                     <TextInput
                         style={styles.inputText}
@@ -29,19 +38,21 @@ function HomeScreen() {
                     />
                 </View>
                 
-                {/* Pantry Image */}
+                {/* pantry image */}
                 <Image
-                    source={imageSource}
+                    source={pantryImages[pantryView]}
                     style={styles.pantry}
+                    //onPress={() => navigation.replace('...')} -> need to navigate to pantry screen
                 />
 
-                {/* Arrow Buttons */}
+                {/* arrow buttons */}
                 <View style={styles.arrowContainer}>
-                    <TouchableOpacity onPress={() => handleArrowPress('left')}>
-                        <Text style={styles.arrowText}>←</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleArrowPress('right')}>
-                        <Text style={styles.arrowText}>→</Text>
+                        <Text style={styles.arrowText}> ← </Text>
+                    </TouchableOpacity>
+                    <Text>              </Text>
+                    <TouchableOpacity onPress={() => handleArrowPress('left')}>
+                        <Text style={styles.arrowText}> → </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -49,5 +60,4 @@ function HomeScreen() {
     );
 }
 
-
-export default HomeScreen
+export default HomeScreen;
