@@ -243,7 +243,157 @@ const styles = StyleSheet.create({
   scanPrompt: {
     top: 600,
     color: '#fff',
-  }
+  },
+  productInfoContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    padding: 20,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    width: '90%',
+  },
+  productName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    textAlign: 'center',
+  },
+  resetButton: {
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#28a745',
+    borderRadius: 5,
+  },
+  resetButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+  },
+  modalContainer: {
+    width: '80%',
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5, // Shadow for Android
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    color: '#333',
+  },
+  modalLabel: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: '#555',
+  },
+  containerOptions: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    justifyContent: 'space-evenly', // Distribute options evenly
+    width: '100%',
+  },
+  containerOption: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: '#f1f1f1',
+    borderRadius: 5,
+    margin: 5,
+  },
+  selectedContainer: {
+    backgroundColor: '#28a745', // Highlight selected container with green
+  },
+  quantityInput: {
+    width: '60%',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    marginBottom: 20,
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  addButton: {
+    backgroundColor: '#28a745', // Green button for submitting
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 5,
+    marginBottom: 15,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  closeButton: {
+    backgroundColor: '#dc3545', // Red button for canceling
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  arrowContainer: {
+    margin: 40,
+    position: 'absolute',
+    top: '65%',  // Vertically center the arrows
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',  // Spread the arrows across the width of the screen
+    alignItems: 'center',  // Vertically center the arrows
+  },
+  arrowButton: {
+    backgroundColor: '#048C00',  // Semi-transparent background for better visibility
+    borderRadius: 30,  // Make the button round
+    width: 50,  // Increase the width of the button
+    height: 50,  // Increase the height of the button
+    justifyContent: 'center',  // Center the text inside the button
+    alignItems: 'center',  // Center the text inside the button
+  },
+
+  leftArrow: {
+    position: 'absolute',
+    left: 0,  // Position at the left edge
+    zIndex: 10,  // Ensure the button stays on top
+  },
+  rightArrow: {
+    position: 'absolute',
+    right: 0,  // Position at the right edge
+    zIndex: 10,  // Ensure the button stays on top
+  },
+  arrowText: {
+    fontSize: 30,  // Increase the size of the arrow text
+    color: '#fff',  // White color for contrast
+  },
+  containerLabel: {
+    top: 40,
+    fontSize: 24, // Size of the label text
+    fontWeight: 'bold', // Makes the text bold
+    textAlign: 'center', // Centers the text
+    color: '#333', // Dark color for the text, can be adjusted
+    textTransform: 'capitalize', // Capitalizes the first letter of each word
+  },
 });
 
 export default styles;
