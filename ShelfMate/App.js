@@ -39,7 +39,7 @@ function App() {
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="Scan" component={ScanScreen} />
         {/* Ensures that Back button on Results screen can navigate back to Scan screen. */}
-        <Stack.Screen name="ScanResult" component={ScanResultScreen} />
+        <Stack.Screen name="Scan Results" component={ScanResultScreen} />
         {/* This wraps your main app screens inside the Tab Navigator */}
         <Stack.Screen name="MainApp" component={TabNavigator} />
       </Stack.Navigator>
