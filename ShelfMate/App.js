@@ -32,11 +32,11 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Scan Results" component={ScanResultScreen} />
         <Stack.Screen name="Sign Up" component={SignupScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
         <Stack.Screen name="Log In" component={LoginScreen} />
-        <Stack.Screen name="Scan Results" component={ScanResultScreen} />
 
         {/* This wraps your main app screens inside the Tab Navigator */}
         <Stack.Screen name="MainApp" component={TabNavigator} />
