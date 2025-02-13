@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -28,6 +28,7 @@ const ScanResultScreen = ({ route }) => {
   const animation = useRef(new Animated.Value(0)).current;
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const handleLongPress = (index) => {
     if (index === expandedItem) {
@@ -49,12 +50,18 @@ const ScanResultScreen = ({ route }) => {
   const handlePlusPress = (item) => {
     setSelectedItem(item);
     setModalVisible(true);
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
   };
 
   const handleSaveToContainer = (container) => {
     // Handle saving the item to the specified container
     console.log(`Saving ${selectedItem.name} to ${container}`);
     setModalVisible(false);
+    fadeAnim.setValue(0);
   };
 
   const filteredItems = scannedItems.filter((item) =>
@@ -70,7 +77,7 @@ const ScanResultScreen = ({ route }) => {
     <SafeAreaView style={styles.scanResultContainer}>
       <View style={styles.scanResultHeader}>
         <TouchableOpacity
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate("Scan")}
           style={styles.scanResultBackButtonContainer}
         >
           <Text style={styles.scanResultBackButton}>Back</Text>
@@ -113,7 +120,7 @@ const ScanResultScreen = ({ route }) => {
       </ScrollView>
       {modalVisible && (
         <BlurView intensity={50} style={styles.absolute}>
-          <View style={styles.modalContainer}>
+          <Animated.View style={[styles.modalContainer, { opacity: fadeAnim }]}>
             <Text style={styles.modalTitle}>Save to:</Text>
             <TouchableOpacity
               onPress={() => handleSaveToContainer("Pantry")}
@@ -139,7 +146,7 @@ const ScanResultScreen = ({ route }) => {
             >
               <Text style={styles.modalCloseButtonText}>Cancel</Text>
             </TouchableOpacity>
-          </View>
+          </Animated.View>
         </BlurView>
       )}
     </SafeAreaView>

@@ -400,57 +400,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 16,
-    paddingTop: 5, // Add padding to avoid the dynamic island
-  },
-  scanResultBackButtonContainer: {
-    padding: 10,
-  },
-  scanResultBackButton: {
-    fontSize: 18,
-    color: "#000",
-  },
-  scanResultSearchBox: {
-    flex: 1,
-    height: 40,
-    borderColor: "#ccc",
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingLeft: 10,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  scanResultScrollViewContent: {
-    flexDirection: "column",
-  },
-  scanResultItemContainer: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-  scanResultItemContent: {
-    backgroundColor: "#f0f0f0",
-    borderRadius: 10,
-    padding: 16,
-  },
-  scanResultItemName: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  scanResultItemDetails: {
-    marginTop: 8,
-    overflow: "hidden", // Ensure content is hidden when collapsed
-  },
-  scanResultContainer: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: "#fff",
-  },
-  scanResultHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 16,
     paddingTop: 20, // Add padding to avoid the dynamic island
   },
   scanResultBackButtonContainer: {
@@ -469,6 +418,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingLeft: 10,
     marginLeft: 10,
+    marginRight: 10,
   },
   scanResultScrollViewContent: {
     flexDirection: "column",
@@ -521,6 +471,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 5,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: -(width * 0.4) }, { translateY: -100 }],
   },
   modalTitle: {
     fontSize: 20,
