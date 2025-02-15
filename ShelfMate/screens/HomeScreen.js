@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Image, TouchableOpacity, View, Text, TextInput } from 'react-native';
 import styles from '../styles';
+import { useNavigation } from '@react-navigation/native';
+
 
 function HomeScreen() {
+    const navigation = useNavigation();
     const [searchQuery, setSearchQuery] = useState(''); //state to store the search query
     const pantryImages = [
         require('../assets/pantry-shelf.png'),
@@ -39,11 +42,14 @@ function HomeScreen() {
                 </View>
                 
                 {/* pantry image */}
+                <TouchableOpacity
+                //onPress={() => navigation.replace('...')} -> need to navigate to product overview screen from here
+                onPress={() => navigation.navigate('ProductOverview')}>
                 <Image
                     source={pantryImages[pantryView]}
                     style={styles.pantry}
-                    //onPress={() => navigation.replace('...')} -> need to navigate to pantry screen
-                />
+
+                /></TouchableOpacity>
 
                 {/* arrow buttons */}
                 <View style={styles.arrowContainer}>
