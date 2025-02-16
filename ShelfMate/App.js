@@ -34,7 +34,6 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="PRPD" component={PRPD} />
         <Stack.Screen name="Sign Up" component={SignupScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
@@ -42,6 +41,7 @@ function App() {
         <Stack.Screen name="Scan" component={ScanScreen} />
         {/* Ensures that Back button on Results screen can navigate back to Scan screen. */}
         <Stack.Screen name="Scan Results" component={ScanResultScreen} />
+        <Stack.Screen name="PRPD" component={PRPD} />
         {/* This wraps your main app screens inside the Tab Navigator */}
         <Stack.Screen name="MainApp" component={TabNavigator} />
       </Stack.Navigator>
