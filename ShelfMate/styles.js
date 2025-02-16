@@ -255,7 +255,87 @@ const styles = StyleSheet.create({
   scanPrompt: {
     top: 600,
     color: '#fff',
-  }
+  },
+  //styling specifically for productoverview page
+  productContainer: {
+    flex: 1,
+    padding: 10,
+},
+gridRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+},
+box: {
+    width: 100,
+    height: 150,
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
+},
+image: {
+    width: 80,
+    height: 80,
+    borderRadius: 5,
+},
+productText: {
+    fontFamily: "Roboto-Regular",
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
+},
+expiryText: {
+    fontSize: 12,
+    color: "white",
+    marginTop: 5,
+    padding: 2,
+    backgroundColor: "#048C00",
+},
+modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+},
+modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    width: "90%",
+    height: "80%",
+    //alignItems: "center",
+},
+modalImage: {
+    width: 220,
+    height: 220,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignSelf: "center",
+},
+modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 5,
+},
+modalText: {
+    fontSize: 16,
+    //textAlign: "center",
+    marginVertical: 2,
+},
+closeButton: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "#A86000",
+    borderRadius: 5,
+    width: "20%",
+},
+closeButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+}
 });
 
 export default styles;

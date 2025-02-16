@@ -9,6 +9,7 @@ import SignupScreen from './screens/SignupScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import QuestionnaireScreen from './screens/QuestionnaireScreen';
 import LoginScreen from './screens/LoginScreen';
+import HomeScreen from './screens/HomeScreen';
 import ProductOverview from './screens/ProductOverview';
 import TabNavigator from './TabNavigator'; // Import the Tab Navigator
 import styles from './styles';
@@ -38,6 +39,7 @@ function App() {
         <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="ProductOverview" component={ProductOverview} />
+        <Stack.Screen name="Home" component={HomeScreen} />
         
         {/* This wraps your main app screens inside the Tab Navigator */}
         <Stack.Screen name="MainApp" component={TabNavigator} />
