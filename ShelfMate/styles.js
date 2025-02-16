@@ -513,6 +513,70 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  prpdContainer: {
+    flexGrow: 1,
+    padding: 16,
+    paddingTop: 40,
+    backgroundColor: "#fff",
+  },
+  prpdHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+    paddingTop: 20,
+  },
+  prpdBackButtonContainer: {
+    padding: 10,
+  },
+  prpdBackButton: {
+    fontSize: 18,
+    color: "#000",
+  },
+  prpdImage: {
+    width: "100%",
+    height: 200,
+    resizeMode: "cover",
+    borderRadius: 10,
+    marginBottom: 16,
+  },
+  prpdDetailsContainer: {
+    flex: 1,
+  },
+  prpdItemName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#000",
+    marginBottom: 8,
+  },
+  prpdItemServings: {
+    fontSize: 16,
+    color: "#888",
+    marginBottom: 16,
+  },
+  prpdItemDescription: {
+    fontSize: 16,
+    color: "#888",
+    marginBottom: 48,
+  },
+  prpdItemDaysLeft: {
+    fontSize: 16,
+    color: "#888",
+    marginBottom: 8,
+  },
+  prpdExpirationContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 8,
+  },
+  prpdItemExpirationDate: {
+    fontSize: 16,
+    color: "#888",
+  },
+  prpdItemQuantity: {
+    fontSize: 16,
+    color: "#888",
+  },
 });
 
 export default styles;

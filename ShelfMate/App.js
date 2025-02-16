@@ -11,6 +11,7 @@ import QuestionnaireScreen from "./screens/QuestionnaireScreen";
 import LoginScreen from "./screens/LoginScreen";
 import ScanScreen from "./screens/ScanScreen";
 import ScanResultScreen from "./screens/ScanResultScreen";
+import PRPD from "./screens/PRPD";
 import TabNavigator from "./TabNavigator"; // Import the Tab Navigator
 import styles from "./styles";
 
@@ -33,6 +34,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="PRPD" component={PRPD} />
         <Stack.Screen name="Sign Up" component={SignupScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
