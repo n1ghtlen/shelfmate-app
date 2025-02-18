@@ -8,11 +8,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   questionnaireContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
   },
   welcome: {
@@ -26,9 +26,7 @@ const styles = StyleSheet.create({
     height: 300,
     objectFit: "contain",
   },
-  canary: {
-
-  },
+  canary: {},
   pantry: {
     width: '300',
     height: '600', // Makes sure the image fills the available space
@@ -46,21 +44,21 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   topTextBackground: {
-    backgroundColor: '#025400',
+    backgroundColor: "#025400",
     padding: 16, // Add padding inside the background container
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     elevation: 4, // Add shadow for Android
-    shadowColor: '#000', // Add shadow for iOS
+    shadowColor: "#000", // Add shadow for iOS
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
   topText: {
     fontSize: 18, // Set a readable font size
-    fontWeight: 'bold', // Bold text for emphasis
-    color: '#fff', // White text for contrast
-    textAlign: 'center', // Center the text
+    fontWeight: "bold", // Bold text for emphasis
+    color: "#fff", // White text for contrast
+    textAlign: "center", // Center the text
     marginTop: 40,
   },
   questionText: {
@@ -70,9 +68,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
   },
-  optionsContainer: {
-
-  },
+  optionsContainer: {},
   option: {
     flexDirection: "row",
     alignItems: "center",
@@ -87,8 +83,8 @@ const styles = StyleSheet.create({
     padding: 16, // Add padding inside the scrollable area
   },
   buttonContainer: {
-    alignItems: 'center', // Centers the button horizontally
-    justifyContent: 'center', // Centers the button vertically (if necessary)
+    alignItems: "center", // Centers the button horizontally
+    justifyContent: "center", // Centers the button vertically (if necessary)
     padding: 20,
   },
   buttons: {
@@ -100,17 +96,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#025400",
   },
   scanButtonContainer: {
-    alignItems: 'center', // Centers the button horizontally
-    justifyContent: 'center', // Centers the button vertically (if necessary)
+    alignItems: "center", // Centers the button horizontally
+    justifyContent: "center", // Centers the button vertically (if necessary)
     padding: 20,
   },
   scanButtons: {
-    color: 'white',
+    color: "white",
   },
   background: {
     flex: 1, // This makes sure the ImageBackground covers the entire screen
-    justifyContent: 'center', // Centers content vertically
-    alignItems: 'center', // Centers content horizontally
+    justifyContent: "center", // Centers content vertically
+    alignItems: "center", // Centers content horizontally
   },
   loginBackground: {
     width: "75%",
@@ -157,13 +153,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   backButtonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'absolute',  // Absolute positioning to keep it above the camera
-    top: 40,  // Space from the top of the screen
-    left: 10,  // Space from the left
-    zIndex: 1,  // Make sure it appears above the camera
-    padding: 10,  // Add some padding to the button
+    flexDirection: "row",
+    alignItems: "center",
+    position: "absolute", // Absolute positioning to keep it above the camera
+    top: 40, // Space from the top of the screen
+    left: 10, // Space from the left
+    zIndex: 1, // Make sure it appears above the camera
+    padding: 10, // Add some padding to the button
   },
   backButton: {
     fontSize: 18,
@@ -245,7 +241,7 @@ const styles = StyleSheet.create({
   cameraContainer: {
     flex: 1, // Allow the container to take up full screen
     justifyContent: "flex-start", // Start from top for camera view
-    backgroundColor: "black"
+    backgroundColor: "black",
   },
   camera: {
     flex: 1, // Make the camera view take up full screen

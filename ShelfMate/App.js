@@ -1,19 +1,18 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { useFonts } from 'expo-font';
-import { View, ActivityIndicator } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useFonts } from "expo-font";
+import { View, ActivityIndicator } from "react-native";
 
 // Import screens & navigators
-import SignupScreen from './screens/SignupScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
-import QuestionnaireScreen from './screens/QuestionnaireScreen';
-import LoginScreen from './screens/LoginScreen';
+import SignupScreen from "./screens/SignupScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import QuestionnaireScreen from "./screens/QuestionnaireScreen";
+import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from './screens/HomeScreen';
 import ProductOverview from './screens/ProductOverview';
-import TabNavigator from './TabNavigator'; // Import the Tab Navigator
-import styles from './styles';
-
+import TabNavigator from "./TabNavigator"; // Import the Tab Navigator
+import styles from "./styles";
 
 const Stack = createStackNavigator();
 
@@ -47,6 +46,5 @@ function App() {
     </NavigationContainer>
   );
 }
-
 
 export default App;
