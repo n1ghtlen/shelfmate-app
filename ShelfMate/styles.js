@@ -2,7 +2,18 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const { width } = Dimensions.get("window");
 
+// Common constants for reuse
+const colors = {
+  primary: "#025400",
+  accent: "#A86000",
+  lightGray: "#ccc",
+  darkText: "#333",
+  mediumGray: "#555",
+  buttonBackground: "#048C00",
+};
+
 const styles = StyleSheet.create({
+  // General text style
   text: {
     fontFamily: "Roboto-Regular",
   },
@@ -18,19 +29,17 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 34,
     fontWeight: "bold",
-    color: "#A86000",
+    color: colors.accent,
     textAlign: "center",
   },
   logo: {
     width: 300,
     height: 300,
-    objectFit: "contain",
   },
   canary: {},
   pantry: {
-    width: '300',
-    height: '600', // Makes sure the image fills the available space
-    objectFit: 'contain',
+    width: 300, // Changed from string to number
+    height: 600,
   },
   bottomTextContainer: {
     position: "absolute",
@@ -44,21 +53,21 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   topTextBackground: {
-    backgroundColor: "#025400",
-    padding: 16, // Add padding inside the background container
+    backgroundColor: colors.primary,
+    padding: 16,
     justifyContent: "center",
     alignItems: "center",
-    elevation: 4, // Add shadow for Android
-    shadowColor: "#000", // Add shadow for iOS
+    elevation: 4,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
   topText: {
-    fontSize: 18, // Set a readable font size
-    fontWeight: "bold", // Bold text for emphasis
-    color: "#fff", // White text for contrast
-    textAlign: "center", // Center the text
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
     marginTop: 40,
   },
   questionText: {
@@ -80,11 +89,11 @@ const styles = StyleSheet.create({
   },
   questionScrollViewContent: {
     flex: 1,
-    padding: 16, // Add padding inside the scrollable area
+    padding: 16,
   },
   buttonContainer: {
-    alignItems: "center", // Centers the button horizontally
-    justifyContent: "center", // Centers the button vertically (if necessary)
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
   },
   buttons: {
@@ -93,25 +102,25 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     margin: 20,
-    backgroundColor: "#025400",
+    backgroundColor: colors.primary,
   },
   scanButtonContainer: {
-    alignItems: "center", // Centers the button horizontally
-    justifyContent: "center", // Centers the button vertically (if necessary)
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
   },
   scanButtons: {
     color: "white",
   },
   background: {
-    flex: 1, // This makes sure the ImageBackground covers the entire screen
-    justifyContent: "center", // Centers content vertically
-    alignItems: "center", // Centers content horizontally
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   loginBackground: {
     width: "75%",
     height: "60%",
-    backgroundColor: "#A86000",
+    backgroundColor: "#333",
     borderRadius: 20,
     alignItems: "center",
   },
@@ -122,19 +131,31 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     marginBottom: 50,
   },
+  // This scrollViewContent is for general scrolling layouts
+  defaultScrollViewContent: {
+    padding: 16,
+    flexGrow: 1,
+  },
+  // Renamed duplicate scroll view content for grid layouts
+  gridScrollViewContent: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
   searchBox: {
     height: 40,
-    borderColor: "#ccc",
+    borderColor: colors.lightGray,
     backgroundColor: "#fff",
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 50,
     width: "90%",
     paddingLeft: 10,
-    marginTop: 50,
+    marginTop: 60,
+    marginVertical: -20,
   },
   inputBox: {
     height: 40,
-    borderColor: "#ccc",
+    borderColor: colors.lightGray,
     backgroundColor: "#fff",
     borderWidth: 1,
     borderRadius: 5,
@@ -146,33 +167,33 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   header: {
-    paddingTop: 60,
+    paddingTop: 100,
+    paddingLeft: 20,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 16,
+    marginBottom: -10,
   },
   backButtonContainer: {
     flexDirection: "row",
     alignItems: "center",
-    position: "absolute", // Absolute positioning to keep it above the camera
-    top: 40, // Space from the top of the screen
-    left: 10, // Space from the left
-    zIndex: 1, // Make sure it appears above the camera
-    padding: 10, // Add some padding to the button
+    position: "absolute",
+    top: 50,
+    left: 10,
+    zIndex: 1,
+    padding: 10,
   },
   backButton: {
-    fontSize: 18,
+    fontSize: 22,
     color: "#000",
   },
   returnButtonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'absolute',  // Absolute positioning to keep it above the camera
-    top: 40,  // Space from the top of the screen
-    left: 10,  // Space from the left
-    zIndex: 1,  // Make sure it appears above the camera
-    // Add some padding
+    position: 'absolute',
+    top: 40,
+    left: 10,
+    zIndex: 1,
   },
   returnButton: {
     fontSize: 18,
@@ -181,14 +202,24 @@ const styles = StyleSheet.create({
   arrowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    marginTop: -40,
   },
   arrowText: {
-    fontSize: 35,
+    fontSize: 36,
     fontWeight: 'bold',
-    padding: 7,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
     color: '#FFFFFF',
-    backgroundColor: "#048C00",
-    borderRadius: 38,
+    backgroundColor: colors.buttonBackground,
+    borderRadius: 50,
+    textAlign: 'center',
+    elevation: 4, 
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
   },
   headerTitle: {
     fontSize: 24,
@@ -201,20 +232,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginVertical: 16,
     textAlign: "left",
-  },
-  scrollViewContent: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+    paddingHorizontal: 10,
   },
   imageContainer: {
     position: "relative",
     marginRight: 16,
-  },
-  image: {
-    width: width * 0.25,
-    height: width * 0.25,
-    borderRadius: 10,
   },
   imageTitle: {
     position: "absolute",
@@ -233,105 +255,206 @@ const styles = StyleSheet.create({
     width: "30%",
     marginBottom: 16,
   },
-  gridImage: {
-    width: "100%",
-    height: width * 0.25,
-    borderRadius: 10,
-  },
   cameraContainer: {
-    flex: 1, // Allow the container to take up full screen
-    justifyContent: "flex-start", // Start from top for camera view
+    flex: 1,
+    justifyContent: "flex-start",
     backgroundColor: "black",
   },
   camera: {
-    flex: 1, // Make the camera view take up full screen
-    width: "100%", // Ensures the camera takes up the full width
-    height: "100%", // Ensures the camera takes up the full height
+    flex: 1,
+    width: "100%",
+    height: "100%",
   },
   scanPrompt: {
     top: 600,
     color: '#fff',
   },
-  //styling specifically for productoverview page
-  productContainer: {
-    flex: 1,
-    padding: 10,
+ // For ProductOverview (SectionList)
+// For ProductOverview
+screenWrapper: {
+  flex: 1,
+  backgroundColor: "#f2f2f2",
 },
-gridRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
+overviewContainer: {
+  padding: 16,
+  paddingBottom: 32,
 },
-box: {
-    width: 100,
-    height: 150,
-    backgroundColor: "#ffffff",
-    borderRadius: 10,
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 5,
+sectionTitle: {
+  fontSize: 20,
+  fontWeight: "600",
+  color: "#333",
+  marginVertical: 12,
+  paddingHorizontal: 8,
 },
-image: {
-    width: 80,
-    height: 80,
-    borderRadius: 5,
+expiringSoonList: {
+  paddingLeft: 8,
+  paddingRight: 8,
 },
-productText: {
-    fontFamily: "Roboto-Regular",
-    fontSize: 14,
-    fontWeight: "bold",
-    textAlign: "center",
+allProductsList: {
+  paddingHorizontal: 8,
+  paddingVertical: 8,
 },
-expiryText: {
-    fontSize: 12,
-    color: "white",
-    marginTop: 5,
-    padding: 2,
-    backgroundColor: "#048C00",
+productCard: {
+  backgroundColor: "#fff",
+  borderRadius: 12,
+  padding: 12,
+  margin: 8,
+  alignItems: "center",
+  width: "47%", // Two items per row
+  shadowColor: "#000",
+  shadowOpacity: 0.15,
+  shadowRadius: 6,
+  shadowOffset: { width: 0, height: 2 },
+  elevation: 3,
+},
+productImage: {
+  width: 100,
+  height: 100,
+  borderRadius: 12,
+},
+productNameText: {
+  marginTop: 8,
+  fontSize: 16,
+  fontWeight: "600",
+  color: "#333",
+  textAlign: "center",
+},
+productExpiry: {
+  marginTop: 4,
+  fontSize: 14,
+  color: "#fff",
+  backgroundColor: "#d9534f",
+  paddingHorizontal: 8,
+  paddingVertical: 4,
+  borderRadius: 12,
+  overflow: "hidden",
+  textTransform: "uppercase",
 },
 modalContainer: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
+  flex: 1,
+  backgroundColor: "rgba(0,0,0,0.6)",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: 16,
 },
 modalContent: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 10,
-    width: "90%",
-    height: "80%",
-    //alignItems: "center",
+  backgroundColor: "#fff",
+  borderRadius: 12,
+  padding: 20,
+  width: "90%",
+  maxHeight: "80%",
+  shadowColor: "#000",
+  shadowOpacity: 0.2,
+  shadowRadius: 8,
+  shadowOffset: { width: 0, height: 4 },
+  elevation: 5,
 },
 modalImage: {
-    width: 220,
-    height: 220,
-    borderRadius: 10,
-    marginBottom: 10,
-    alignSelf: "center",
+  width: "100%",
+  height: 200,
+  borderRadius: 12,
+  marginBottom: 16,
 },
 modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 5,
+  fontSize: 22,
+  fontWeight: "600",
+  color: "#333",
+  marginBottom: 8,
 },
 modalText: {
-    fontSize: 16,
-    //textAlign: "center",
-    marginVertical: 2,
+  fontSize: 16,
+  color: "#555",
+  marginBottom: 4,
 },
 closeButton: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: "#A86000",
-    borderRadius: 5,
-    width: "20%",
+  backgroundColor: "#025400",
+  paddingVertical: 10,
+  paddingHorizontal: 20,
+  borderRadius: 30,
+  alignSelf: "center",
+  marginTop: 16,
 },
 closeButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-}
+  color: "#fff",
+  fontSize: 16,
+  fontWeight: "600",
+  textAlign: "center",
+},
+
+// For PantryInfoScreen
+
+pantryHeader: {
+  fontSize: 24,
+  fontWeight: "bold",
+  marginVertical: 16,
+  color: "#333",
+},
+pantryList: {
+  padding: 10,
+},
+pantryItem: {
+  flex: 1,
+  margin: 5,
+  alignItems: "center",
+},
+pantryItemCard: {
+  backgroundColor: "#fff",
+  padding: 15,
+  borderRadius: 10,
+  alignItems: "center",
+  elevation: 2,
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+},
+pantryItemText: {
+  marginTop: 8,
+  fontSize: 16,
+  fontWeight: "600",
+  color: "#333",
+},
+detailContainer: {
+  flex: 1,
+  padding: 20,
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "#f5f5f5",
+},
+detailBackButton: {
+  flexDirection: "row",
+  alignItems: "center",
+  alignSelf: "flex-start",
+  marginBottom: 20,
+},
+detailBackText: {
+  fontSize: 18,
+  marginLeft: 5,
+  color: "#025400",
+},
+detailCard: {
+  backgroundColor: "#fff",
+  padding: 20,
+  borderRadius: 10,
+  alignItems: "center",
+  width: "100%",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 4,
+  elevation: 3,
+},
+detailTitle: {
+  fontSize: 24,
+  fontWeight: "bold",
+  marginVertical: 10,
+  color: "#333",
+},
+detailDescription: {
+  fontSize: 16,
+  textAlign: "center",
+  color: "#555",
+},
+  
 });
 
 export default styles;
