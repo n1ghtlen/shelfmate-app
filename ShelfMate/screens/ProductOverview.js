@@ -21,7 +21,7 @@ function ProductOverview({ route }) {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch("https://shelfmate-app.onrender.com");
+                const response = await fetch("https://shelfmate-app.onrender.com/items");
                 const data = await response.json();
 
                 console.log("Raw Data:", data);
