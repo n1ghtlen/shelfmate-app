@@ -84,7 +84,7 @@ function ScanScreen() {
   
       console.log("Payload being sent:", payload);
   
-      const response = await fetch('https://shelfmate-app.onrender.com', { 
+      const response = await fetch('https://shelfmate-app.onrender.com/add-item', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
