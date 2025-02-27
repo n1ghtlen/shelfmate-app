@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { 
-  View, Text, Button, TouchableOpacity, Alert, ActivityIndicator, Image, 
-  TextInput, Modal 
-} from "react-native";
+import { View, Text, Button, TouchableOpacity, Alert, ActivityIndicator, Image, TextInput, Modal } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import styles from '../styles';
 import { useNavigation } from '@react-navigation/native';
@@ -29,23 +26,20 @@ function ScanScreen() {
 
   const handleBarCodeScanned = async (barcode) => {
     if (!scanned) {
-      setScanned(true);
+      setScanned(true); // Disable scanning until the result is processed
       setLoading(true);
-  
+
       const apiUrl = `https://world.openfoodfacts.org/api/v0/product/${barcode.data}.json`;
-  
+
       try {
         const response = await fetch(apiUrl);
         const data = await response.json();
-  
-        console.log("API Response:", data);
-  
+
+        console.log("API Response:", data); // Log the API response to debug
+
         if (data.status === 1 && data.product) {
-          setProductInfo({
-            product_name: data.product.product_name || "Unknown Product",
-            barcode: data.product.code,
-            image_url: data.product.image_url || null, // Store image URL
-          });
+          setProductInfo(data.product); // Store the product info in state
+          setModalVisible(true); // Show modal to select container and quantity
         } else {
           Alert.alert("Product not found", "Unable to find product details.");
         }
@@ -56,49 +50,47 @@ function ScanScreen() {
         setLoading(false);
       }
     }
-  };  
+  };
 
   const resetScanner = () => {
-    setScanned(false);
-    setProductInfo(null);
-    setContainer("pantry");
-    setQuantity(1);
-    setExpirationDate('');
+    setScanned(false); // Reset the scanner so it can scan again
+    setProductInfo(null); // Clear the previous product info
+    setContainer("pantry"); // Reset container to pantry by default
+    setQuantity(1); // Reset quantity to 1
+    setExpirationDate(''); // Reset expiration date to empty
   };
 
   const handleAddToContainer = async () => {
     try {
-      if (!productInfo) {
-        Alert.alert("Error", "No product data available.");
-        return;
-      }
-  
+      // Create a payload to send to the backend
       const payload = {
-        container, // Now using "container" field instead of "containerName"
+        containerName: container,
         productName: productInfo.product_name,
-        barcode: productInfo.barcode,
-        quantity: parseInt(quantity, 10) || 1, // Ensure quantity is a number
+        barcode: productInfo.code,
+        quantity,
         expirationDate,
-        image: productInfo.image_url,
       };
-  
+
+      // Send the request to the backend
       console.log("Payload being sent:", payload);
-  
-      const response = await fetch('https://shelfmate-app.onrender.com/add-item', { 
+
+      const response = await fetch('http://192.168.1.242:5001/add-item', { // Replace with your backend URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       });
-  
+
       const data = await response.json();
-  
-      if (response.status === 201) { // Change 200 to 201 (successful creation)
+
+      if (response.status === 200) {
+        // If the request is successful, show a success message
         Alert.alert("Success", `Added ${quantity} of ${productInfo.product_name} to the ${container}`);
-        setModalVisible(false);
-        resetScanner();
+        setModalVisible(false); // Close the modal
+        resetScanner(); // Reset scanner for next item
       } else {
+        // If there's an error, show an alert with the error message
         Alert.alert("Error", data.message || "Something went wrong!");
       }
     } catch (error) {
@@ -106,7 +98,6 @@ function ScanScreen() {
       Alert.alert("Error", "Failed to add item to the container.");
     }
   };
-  
 
   if (!permission) return <View />;
   
@@ -133,7 +124,10 @@ function ScanScreen() {
 
   return (
     <View style={styles.cameraContainer}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.returnButtonContainer}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.returnButtonContainer}
+      >
         <Text style={styles.returnButton}>Return</Text>
       </TouchableOpacity>
 
@@ -142,7 +136,9 @@ function ScanScreen() {
           style={styles.camera}
           facing={facing}
           ref={cameraRef}
-          barcodeScannerSettings={{ barcodeTypes: ["upc_a", "ean13", "qr"] }}
+          barcodeScannerSettings={{
+            barcodeTypes: ["upc_a", "ean13", "qr"],
+          }}
           onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
         >
           <View style={styles.scanButtonContainer}>
@@ -164,13 +160,14 @@ function ScanScreen() {
               style={{ width: 100, height: 100, resizeMode: 'contain', marginBottom: 10 }} 
             />
           )}
-          <Text style={styles.productName}>{productInfo.product_name}</Text>
-          {/* Reset Button */}
+          <Text style={styles.productName}>{productInfo.product_name || "Product Name Not Available"}</Text>
+          <Text>{productInfo.ingredients_text || "Ingredients not available"}</Text>
+          {productInfo.nutriments && (
+            <Text>Calories: {productInfo.nutriments.energy_kcal || "N/A"} kcal</Text>
+          )}
+          {/* Reset Button to scan another item */}
           <TouchableOpacity onPress={resetScanner} style={styles.resetButton}>
             <Text style={styles.resetButtonText}>Scan Another Product</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.resetButton}>
-            <Text style={styles.resetButtonText}>Add item</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -202,7 +199,17 @@ function ScanScreen() {
               placeholder="Enter quantity"
               keyboardType="numeric"
               value={quantity.toString()}
-              onChangeText={(text) => setQuantity(text.replace(/[^0-9]/g, ""))}
+              onChangeText={(text) => {
+                // Check if the input is a valid number
+                const parsedQuantity = parseInt(text, 10);
+
+                // Only update if the input is a valid number or empty
+                if (!isNaN(parsedQuantity) && parsedQuantity > 0) {
+                  setQuantity(parsedQuantity);
+                } else if (text === "") {
+                  setQuantity(""); // Allow clearing the input
+                }
+              }}
             />
             <TextInput
               style={styles.expirationInput}
@@ -224,7 +231,6 @@ function ScanScreen() {
 }
 
 export default ScanScreen;
-
 
 
 

@@ -3,39 +3,34 @@ import { Image, TouchableOpacity, View, Text, TextInput } from 'react-native';
 import styles from '../styles';
 import { useNavigation } from '@react-navigation/native';
 
+
 function HomeScreen() {
     const navigation = useNavigation();
-    const [searchQuery, setSearchQuery] = useState(''); // State to store the search query
-
+    const [searchQuery, setSearchQuery] = useState(''); //state to store the search query
     const pantryImages = [
-        require('../assets/pantry-shelf.png'),    // Image for Pantry
-        require('../assets/pantry-fridge.png'),   // Image for Fridge
-        require('../assets/pantry-freezer.png')   // Image for Freezer
+        require('../assets/pantry-shelf.png'),
+        require('../assets/pantry-fridge.png'),
+        require('../assets/pantry-freezer.png')
     ];
     
-    const [pantryView, setPantryView] = useState(0); // Track index of current view
+    const [pantryView, setPantryView] = useState(0); //track index of current view
 
     const handleArrowPress = (direction) => {
         let newIndex = pantryView;
 
         if (direction === 'left') {
-            newIndex = (pantryView + 1) % pantryImages.length; // Travel forward
+            newIndex = (pantryView + 1) % pantryImages.length; //travel forward
         } else if (direction === 'right') {
-            newIndex = (pantryView - 1 + pantryImages.length) % pantryImages.length; // Travel back
+            newIndex = (pantryView - 1 + pantryImages.length) % pantryImages.length; //travel back
         }
 
         setPantryView(newIndex);
     };
 
-    // Function to navigate to ProductOverview with selected container
-    const navigateToProductOverview = (container) => {
-        navigation.navigate("ProductOverview", { selectedContainer: container });
-    };
-
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container}>
-                {/* Search Box */}
+                {/* search box */}
                 <View style={styles.searchBox}>
                     <TextInput
                         style={styles.inputText}
@@ -46,21 +41,17 @@ function HomeScreen() {
                     />
                 </View>
                 
-                {/* Pantry Image */}
+                {/* pantry image */}
                 <TouchableOpacity
-                    onPress={() => {
-                        // Navigate to ProductOverview with the corresponding container (pantry, fridge, freezer)
-                        const containerType = pantryView === 0 ? "pantry" : pantryView === 1 ? "fridge" : "freezer";
-                        navigateToProductOverview(containerType);
-                    }}
-                >
-                    <Image
-                        source={pantryImages[pantryView]}
-                        style={styles.pantry}
-                    />
-                </TouchableOpacity>
+                //onPress={() => navigation.replace('...')} -> need to navigate to product overview screen from here
+                onPress={() => navigation.navigate('ProductOverview')}>
+                <Image
+                    source={pantryImages[pantryView]}
+                    style={styles.pantry}
 
-                {/* Arrow Buttons */}
+                /></TouchableOpacity>
+
+                {/* arrow buttons */}
                 <View style={styles.arrowContainer}>
                     <TouchableOpacity onPress={() => handleArrowPress('right')}>
                         <Text style={styles.arrowText}> ← </Text>
