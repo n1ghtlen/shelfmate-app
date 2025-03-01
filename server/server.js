@@ -1,78 +1,87 @@
-// Import necessary packages and modules
 import express from 'express';
-import { connect } from 'mongoose';
-import pkg from 'body-parser';
-const { json } = pkg;
+import mongoose from 'mongoose';
 import cors from 'cors';
-
-// Import your models
-import Container from './models/Container.js';
 import Item from './models/Item.js';
+import dotenv from 'dotenv';
+
+dotenv.config(); // Load environment variables
 
 const app = express();
-const port = 5001;
+
+// Use the port from environment variables, otherwise default to 5001
+const port = process.env.PORT || 5001; 
 
 // Middleware
-app.use(json());
+app.use(express.json());
 app.use(cors());
 
-// Connect to MongoDB
-connect('mongodb://localhost:27017/foodInventory')
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => {
-    console.error('Error connecting to MongoDB: ', err);
-    process.exit(1); // Exit the process if the connection fails
-  });
+// Connect to MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+})
+.then(() => console.log('Connected to MongoDB Atlas'))
+.catch((err) => {
+    console.error('Error connecting to MongoDB:', err);
+    process.exit(1); // Exit if connection fails
+});
 
-
-// Route to add an item to a container
+// Route to add an item
 app.post('/add-item', async (req, res) => {
-  const { containerName, productName, barcode, quantity, expirationDate } = req.body;
+  const { container, productName, barcode, quantity, expirationDate, image } = req.body;
+
   console.log('Received payload:', req.body);
 
+  console.log('Container:', container);
+  console.log('Product Name:', productName);
+  console.log('Barcode:', barcode);
+  console.log('Quantity:', quantity);
+  console.log('Expiration Date:', expirationDate);
+  console.log('Image URL:', image);
+
   try {
-    // Check if containerName is provided
-    if (!containerName || !productName || !barcode || !quantity || !expirationDate) {
-      return res.status(400).json({ message: 'Missing required fields!' });
-    }
-
-    // Find the container by name
-    const container = await Container.findOne({ name: containerName });
-
-    if (!container) {
-      return res.status(404).json({ message: 'Container not found!' });
-    }
-
-    // Check if there's enough space in the container
-    if (container.current_capacity + quantity > container.capacity) {
-      return res.status(400).json({ message: 'Not enough space in the container!' });
-    }
-
-    // Create a new item and save it to the database
+    // Create a new item with the container field
     const newItem = new Item({
       product_name: productName,
       barcode,
       quantity,
-      container_id: container._id,
+      container, // Now directly storing the container type as a string
       expiration_date: expirationDate,
+      image,
     });
 
     await newItem.save();
 
-    // Update the container's current capacity
-    container.current_capacity += quantity;
-    await container.save();
-
-    res.status(200).json({ message: 'Item added successfully!' });
+    res.status(201).json({ message: 'Item added successfully!', item: newItem });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error adding item', error: error.message });
   }
 });
 
+// Route to get items (optional: filter by container)
+app.get('/items', async (req, res) => {
+  try {
+    const { container } = req.query;
+    const filter = container ? { container } : {}; // Filter if container is provided
+
+    const items = await Item.find(filter); // Fetch from MongoDB
+    res.setHeader('Content-Type', 'application/json'); // Explicitly set content type
+    res.json(items);
+  } catch (error) {
+    console.error('Error fetching items:', error);
+    res.status(500).json({ message: 'Error fetching items', error: error.message });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+});
+
+// Handle unknown routes
+app.use((req, res) => {
+  res.status(404).send('Route not found');
 });
 
 
