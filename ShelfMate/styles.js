@@ -540,52 +540,65 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 8,
   },
-  instructionsContainer: {
-    width: width * 0.9,
+  detailImage: {
+    width: width,
+    height: height / 3,
+    marginBottom: 20,
   },
-  instructionsTitle: {
-    marginTop: 50,
-    fontSize: 18,
+  recipeHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  headerTitle: {
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
-  },
-  instructions: {
-    fontSize: 16,
-    lineHeight: 24,
     color: "#333",
+    flex: 1,
+    textAlign: "center",
   },
-  ingredientsContainer: {
-    marginTop: 20,
-    width: width * 0.8,
-    height: height * 0.4,
+  recipeTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+    textAlign: "center",
   },
   ingredientsTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
+    color: "#333",
     marginBottom: 10,
+    textAlign: "center",
   },
   ingredient: {
     fontSize: 16,
+    color: "#555",
     marginBottom: 5,
+    textAlign: "center",
+  },
+  instructionsTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
     color: "#333",
-  },
-  detailImage: {
-    width: width * 1,
-    height: 250,
-    marginBottom: 20,
-  },
-  instructionsContainer: {
-    marginBottom: 20,
-    paddingBottom: 10,
-    width: width * 1,
+    marginTop: 20,
+    marginBottom: 10,
+    textAlign: "center",
   },
   instructionsText: {
     fontSize: 16,
+    color: "#555",
     lineHeight: 24,
-    color: "#444",
-    textAlign: "left",
+    textAlign: "center",
     padding: 20,
   },
+  heartIconContainer: {
+    padding: 5,
+    backgroundColor: "transparent",
+  },
+  heartButton: {
+    padding: 20,
+  }
 });
 
 export default styles;

@@ -8,12 +8,12 @@ import {
   Dimensions,
   ScrollView,
   ActivityIndicator,
-  SafeAreaView
 } from "react-native";
-import RecipeDetails from "./RecipeDetails"; // Import RecipeDetails
+import RecipeDetails from "./RecipeDetails";
 import styles from "../styles";
+import { Ionicons } from "@expo/vector-icons"; // Import Ionicons for the heart icon
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const staticRecipeIDs = [52772, 52844, 52977]; // Three specific MealDB recipe IDs
 
@@ -21,7 +21,7 @@ const RecipeScreen = () => {
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [availableRecipes, setAvailableRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedRecipe, setSelectedRecipe] = useState(null); // Store selected recipe
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   useEffect(() => {
     fetchSavedRecipes();
@@ -57,7 +57,15 @@ const RecipeScreen = () => {
     }
   };
 
-  // Reset selected recipe (go back to main list)
+  const toggleRecipeSave = (meal) => {
+    setSavedRecipes((prevRecipes) => {
+      const isAlreadySaved = prevRecipes.some((recipe) => recipe.idMeal === meal.idMeal);
+      return isAlreadySaved
+        ? prevRecipes.filter((recipe) => recipe.idMeal !== meal.idMeal) // Remove from saved
+        : [...prevRecipes, meal]; // Add to saved
+    });
+  };
+
   const handleBack = () => {
     setSelectedRecipe(null);
   };
@@ -65,11 +73,15 @@ const RecipeScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground source={require("../assets/background-2.png")} style={styles.backgroundImage}>
-        {selectedRecipe ? ( 
-          <RecipeDetails meal={selectedRecipe} onBack={handleBack} /> // Shows RecipeDetails if a recipe is selected
+        {selectedRecipe ? (
+          <RecipeDetails
+            meal={selectedRecipe}
+            onBack={handleBack}
+            toggleRecipeSave={toggleRecipeSave}
+            isSaved={savedRecipes.some((recipe) => recipe.idMeal === selectedRecipe.idMeal)}
+          />
         ) : (
           <View style={styles.container}>
-            {/* Header */}
             <View style={styles.header}>
               <Text style={styles.headerTitle}>Recipes</Text>
             </View>
@@ -94,17 +106,26 @@ const RecipeScreen = () => {
               )}
             </ScrollView>
 
-            {/* API Fetched Recipes */}
+            {/* Discoverable Recipes */}
             <Text style={styles.sectionTitle}>Discover New Recipes</Text>
             {loading ? (
               <ActivityIndicator size="large" color="#000" />
             ) : (
               <ScrollView contentContainerStyle={styles.gridContainer}>
                 {availableRecipes.map((meal, index) => (
-                  <TouchableOpacity key={index} style={styles.gridItem} onPress={() => setSelectedRecipe(meal)}>
-                    <Image source={{ uri: meal.strMealThumb }} style={styles.gridImage} resizeMode="cover" />
-                    <Text style={styles.imageTitle}>{meal.strMeal}</Text>
-                  </TouchableOpacity>
+                  <View key={index} style={styles.gridItem}>
+                    <TouchableOpacity onPress={() => setSelectedRecipe(meal)}>
+                      <Image source={{ uri: meal.strMealThumb }} style={styles.gridImage} resizeMode="cover" />
+                      <Text style={styles.imageTitle}>{meal.strMeal}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => toggleRecipeSave(meal)}>
+                      <Ionicons
+                        name={savedRecipes.some((recipe) => recipe.idMeal === meal.idMeal) ? "heart" : "heart-outline"}
+                        size={24}
+                        color="red"
+                      />
+                    </TouchableOpacity>
+                  </View>
                 ))}
               </ScrollView>
             )}
@@ -116,7 +137,4 @@ const RecipeScreen = () => {
 };
 
 export default RecipeScreen;
-
-
-
 
