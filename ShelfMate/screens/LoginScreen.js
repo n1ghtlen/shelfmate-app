@@ -10,7 +10,7 @@ function LoginScreen({ navigation }) {
     return (
       <ImageBackground
         source={require('../assets/background.png')} // Your background image
-        style={styles.background} // Ensure the background covers the whole screen
+        style={styles.backgroundImage} // Ensure the background covers the whole screen
       >
           <View style={styles.loginBackground}>
             <Text style={styles.loginHeading}>Log In</Text>

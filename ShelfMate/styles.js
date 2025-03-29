@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   text: {
@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
   },
   questionnaireContainer: {
     alignItems: "center",
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   scanButtons: {
     color: "white",
   },
-  background: {
+  backgroundImage: {
     flex: 1, // This makes sure the ImageBackground covers the entire screen
     justifyContent: "center", // Centers content vertically
     alignItems: "center", // Centers content horizontally
@@ -164,6 +165,8 @@ const styles = StyleSheet.create({
   backButton: {
     fontSize: 18,
     color: "#000",
+    fontWeight: 'bold',
+    marginTop: 10,
   },
   returnButtonContainer: {
     flexDirection: "row",
@@ -175,6 +178,7 @@ const styles = StyleSheet.create({
     // Add some padding
   },
   returnButton: {
+    marginTop: 10,
     fontSize: 18,
     color: "#fff",
   },
@@ -195,6 +199,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     flex: 1,
+    backgroundColor: "fff",
   },
   sectionTitle: {
     fontSize: 20,
@@ -223,6 +228,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+    backgroundColor: 'black',
   },
   gridContainer: {
     flexDirection: "row",
@@ -533,6 +539,52 @@ const styles = StyleSheet.create({
     color: "#555",
     textAlign: "center",
     marginBottom: 8,
+  },
+  instructionsContainer: {
+    width: width * 0.9,
+  },
+  instructionsTitle: {
+    marginTop: 50,
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  instructions: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: "#333",
+  },
+  ingredientsContainer: {
+    marginTop: 20,
+    width: width * 0.8,
+    height: height * 0.4,
+  },
+  ingredientsTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  ingredient: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: "#333",
+  },
+  detailImage: {
+    width: width * 1,
+    height: 250,
+    marginBottom: 20,
+  },
+  instructionsContainer: {
+    marginBottom: 20,
+    paddingBottom: 10,
+    width: width * 1,
+  },
+  instructionsText: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: "#444",
+    textAlign: "left",
+    padding: 20,
   },
 });
 

@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 const itemSchema = new mongoose.Schema({
   product_name: String,
   quantity: Number,
@@ -11,10 +10,13 @@ const itemSchema = new mongoose.Schema({
     required: true
   },
   image: String,
+  barcode: String,
+  allergens: { 
+    type: String,
+  }
 });
 
 const Item = mongoose.model("Item", itemSchema);
-
 
 export default Item;
 

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import Item from './models/Item.js';
 import dotenv from 'dotenv';
+import fetch from 'node-fetch';
 
 dotenv.config(); // Load environment variables
 
@@ -26,30 +27,62 @@ mongoose.connect(process.env.MONGO_URI, {
     process.exit(1); // Exit if connection fails
 });
 
-// Route to add an item
+// Function to Fetch Allergens from OpenFoodFacts
+async function getAllergens(barcode) {
+  try {
+    const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`);
+    const data = await response.json();
+
+    if (data.status === 1 && data.product) {
+      const allergens_from_ingredients = data.product.allergens_from_ingredients || "No allergens from ingredients listed";
+
+      const allergens_text = data.product.allergens || "No allergens listed";
+
+      console.log("Allergens from Ingredients:", allergens_from_ingredients);
+      console.log("Allergens Text:", allergens_text);
+      
+      return {
+        allergens_from_ingredients, // This is the new allergen field
+        allergens_text
+      };
+    } else {
+      console.log("Product not found or no allergens data available.");
+      return { allergens_from_ingredients: "No allergens from ingredients listed", allergens_text: "No allergens listed" };
+    }
+  } catch (error) {
+    console.error("Error fetching allergens:", error);
+    return { allergens_from_ingredients: "No allergens from ingredients listed", allergens_text: "No allergens listed" };
+  }
+}
+
+// Route to Add Item
 app.post('/add-item', async (req, res) => {
   const { container, productName, barcode, quantity, expirationDate, image } = req.body;
 
   console.log('Received payload:', req.body);
 
-  console.log('Container:', container);
-  console.log('Product Name:', productName);
-  console.log('Barcode:', barcode);
-  console.log('Quantity:', quantity);
-  console.log('Expiration Date:', expirationDate);
-  console.log('Image URL:', image);
-
   try {
-    // Create a new item with the container field
+    // Default to empty allergen data if not provided
+    let allergensData = "No allergens listed"; 
+
+    if (barcode) {
+      // Fetch allergens data from OpenFoodFacts
+      const allergens = await getAllergens(barcode); // Fetch allergens from OpenFoodFacts
+      allergensData = allergens.allergens_from_ingredients || "No allergens listed"; // Use allergens_from_ingredients if available
+    }
+
+    // Create a new item with the fetched or default allergen data
     const newItem = new Item({
       product_name: productName,
       barcode,
       quantity,
-      container, // Now directly storing the container type as a string
+      container,
       expiration_date: expirationDate,
       image,
+      allergens: allergensData // Store allergens as a string
     });
 
+    // Save the item to the database
     await newItem.save();
 
     res.status(201).json({ message: 'Item added successfully!', item: newItem });
@@ -58,6 +91,8 @@ app.post('/add-item', async (req, res) => {
     res.status(500).json({ message: 'Error adding item', error: error.message });
   }
 });
+
+
 
 // Route to get items (optional: filter by container)
 app.get('/items', async (req, res) => {

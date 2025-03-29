@@ -11,7 +11,7 @@ import QuestionnaireScreen from "./screens/QuestionnaireScreen";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProductOverview from "./screens/ProductOverview";
-import PantryInfoScreen from "./screens/PantryInfoScreen";
+import RecipeDetails from "./screens/RecipeDetails";
 import TabNavigator from "./TabNavigator"; // Import the Tab Navigator
 import styles from "./styles";
 
@@ -36,7 +36,7 @@ function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Sign Up" component={SignupScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
+        {/*<Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />leaving this out for time being*/} 
         <Stack.Screen name="Log In" component={LoginScreen} />
         <Stack.Screen name="ProductOverview" component={ProductOverview} />
         <Stack.Screen name="Home" component={HomeScreen} />

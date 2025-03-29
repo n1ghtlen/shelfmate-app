@@ -7,7 +7,7 @@ function WelcomeScreen({ navigation }) {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate('Questionnaire')}
+      onPress={() => navigation.navigate('MainApp')} //changed this to enter MainApp navigation instead of QuestionnaireScreen for now
     >
       <Image
         source={require('../assets/logo.png')}

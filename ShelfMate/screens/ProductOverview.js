@@ -39,9 +39,9 @@ function ProductOverview({ route }) {
                         name: product.product_name || "Unnamed Product",
                         image: getImageSource(product),
                         expiry: formattedExpirationDate,
-                        description: product.description || "No description available",
                         quantity: product.quantity || 1,
                         container: product.container || "pantry", // Ensure the container is included
+                        allergens: product.allergens || "No allergens listed",
                     };
                 });
                 setProducts(formattedData);
@@ -146,7 +146,7 @@ function ProductOverview({ route }) {
                                     <Text style={styles.itemModalTitle}>{selectedProduct.name}</Text>
                                     <Text style={styles.itemModalText}>Expiry Date: {selectedProduct.expiry}</Text>
                                     <Text style={styles.itemModalText}>Quantity: {selectedProduct.quantity}</Text>
-                                    <Text style={styles.itemModalText}>{selectedProduct.description}</Text>
+                                    <Text style={styles.itemModalText}>{selectedProduct.allergens}</Text>
                                 </>
                             )}
                         </View>
