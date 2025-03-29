@@ -36,6 +36,15 @@ const RecipeDetails = ({ meal, onBack, savedRecipes, toggleRecipeSave }) => {
     return ingredients;
   };
 
+  const formatInstructions = (instructions) => {
+    const sentences = instructions.split(". "); // Split sentences by period
+    return sentences.map((sentence, index) => (
+      <Text key={index} style={styles.instructionsText}>
+        {sentence.trim()}. {/* Re-add period and indent */}
+      </Text>
+    ));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={onBack} style={styles.backButtonContainer}>
@@ -59,7 +68,7 @@ const RecipeDetails = ({ meal, onBack, savedRecipes, toggleRecipeSave }) => {
         </TouchableOpacity>
 
       {/* Recipe Ingredients */}
-      <ScrollView>
+      <ScrollView style = {{backgroundColor: "#fff"}}>
         <Text style={styles.ingredientsTitle}>Ingredients:</Text>
         <View style={styles.ingredientsContainer}
           showsVerticalScrollIndicator={true}
@@ -73,10 +82,8 @@ const RecipeDetails = ({ meal, onBack, savedRecipes, toggleRecipeSave }) => {
 
         {/* Recipe Instructions */}
         <Text style={styles.instructionsTitle}>Instructions:</Text>
-        <View style={styles.instructionsContainer}
-          showsVerticalScrollIndicator={true}
-          persistentScrollbar={true}>
-          <Text style={styles.instructionsText}>{meal.strInstructions}</Text>
+        <View style={styles.instructionsContainer}>
+          {formatInstructions(meal.strInstructions)}
         </View>
       </ScrollView>
       </SafeAreaView>

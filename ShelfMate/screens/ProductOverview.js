@@ -144,7 +144,7 @@ function ProductOverview({ route }) {
                                     </TouchableOpacity>
                                     <Image source={selectedProduct.image} style={styles.modalImage} />
                                     <Text style={styles.itemModalTitle}>{selectedProduct.name}</Text>
-                                    <Text style={styles.itemModalText}>Expiry Date: {selectedProduct.expiry}</Text>
+                                    <Text style={styles.itemModalText}>Expires: {selectedProduct.expiry}</Text>
                                     <Text style={styles.itemModalText}>Quantity: {selectedProduct.quantity}</Text>
                                     <Text style={styles.itemModalText}>{selectedProduct.allergens}</Text>
                                 </>

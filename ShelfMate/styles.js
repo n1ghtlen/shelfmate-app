@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    padding: 10,
   },
   gridItem: {
     width: "30%",
@@ -314,7 +315,7 @@ const styles = StyleSheet.create({
     width: 220,
     height: 220,
     borderRadius: 10,
-    marginBottom: 10,
+    margin: 10,
     alignSelf: "center",
   },
   modalTitle: {
@@ -565,6 +566,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   ingredientsTitle: {
+    paddingTop: 20,
     fontSize: 20,
     fontWeight: "bold",
     color: "#333",
@@ -578,6 +580,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   instructionsTitle: {
+    paddingTop: 20,
     fontSize: 20,
     fontWeight: "bold",
     color: "#333",
