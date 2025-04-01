@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   backButton: {
     fontSize: 18,
     color: "#000",
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 10,
   },
   returnButtonContainer: {
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
   gridContainer: {
     flexDirection: "row",
@@ -454,6 +454,34 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingLeft: 10,
   },
+  quantityButton: {
+    backgroundColor: "#048C00",
+    padding: 10,
+    borderRadius: 5,
+  },
+  quantityButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontStyle: "bold",
+  },
+  quantityControls: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  deleteButton: {
+    borderColor: "#dc3545",
+    color: "#fcb1b1",
+    borderRadius: 20,
+    borderWidth: 2,
+    padding: 10,
+  },
+  deleteButtonText: {
+    color: "#dc3545",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   expirationInput: {
     height: 40,
     borderColor: "#ccc",
@@ -601,7 +629,7 @@ const styles = StyleSheet.create({
   },
   heartButton: {
     padding: 20,
-  }
+  },
 });
 
 export default styles;
