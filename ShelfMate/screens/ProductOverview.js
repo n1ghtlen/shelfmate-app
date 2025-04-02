@@ -85,9 +85,8 @@ function ProductOverview({ route }) {
   const expiringSoon = sortedProducts.filter((product) => {
     if (product.expiry === "No date available") return false;
   
-    // Ensure the date is correctly parsed from MM/DD/YYYY format
     const [month, day, year] = product.expiry.split("/").map(Number);
-    const expiryDate = new Date(year, month - 1, day); // Month is 0-based in JS Date
+    const expiryDate = new Date(year, month - 1, day);
   
     return expiryDate <= today;
   });
