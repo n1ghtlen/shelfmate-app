@@ -109,6 +109,24 @@ app.get('/items', async (req, res) => {
   }
 });
 
+// Route to delete an item
+app.delete('/delete-item/:id', async (req, res) => {
+  const { id } = req.params; // Get the item ID from the request parameters
+  console.log('Received delete request for ID:', id);
+  
+  try {
+    const deletedItem = await Item.findByIdAndDelete(id); // Delete item from MongoDB
+    if (!deletedItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.json({ message: 'Item deleted successfully', item: deletedItem });
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    res.status(500).json({ message: 'Error deleting item', error: error.message });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

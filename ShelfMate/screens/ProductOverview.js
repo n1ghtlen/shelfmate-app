@@ -41,9 +41,13 @@ function ProductOverview({ route }) {
           const expirationDate = product.expiration_date;
           const formattedExpirationDate =
             expirationDate && !isNaN(new Date(expirationDate).getTime())
-              ? new Date(expirationDate).toISOString().split("T")[0]
+              ? new Date(expirationDate).toLocaleDateString("en-US", {
+                  month: "2-digit",
+                  day: "2-digit",
+                  year: "numeric",
+                })
               : "No date available";
-
+        
           return {
             id: product._id?.$oid || product._id || Math.random().toString(),
             name: product.product_name || "Unnamed Product",
@@ -54,6 +58,7 @@ function ProductOverview({ route }) {
             allergens: product.allergens || "No allergens listed",
           };
         });
+        
         setProducts(formattedData);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -79,9 +84,14 @@ function ProductOverview({ route }) {
   const today = new Date();
   const expiringSoon = sortedProducts.filter((product) => {
     if (product.expiry === "No date available") return false;
-    const expiryDate = new Date(product.expiry);
+  
+    // Ensure the date is correctly parsed from MM/DD/YYYY format
+    const [month, day, year] = product.expiry.split("/").map(Number);
+    const expiryDate = new Date(year, month - 1, day); // Month is 0-based in JS Date
+  
     return expiryDate <= today;
   });
+  
 
   return (
     <>
@@ -233,17 +243,34 @@ function ProductOverview({ route }) {
                   {/* Delete Button */}
                   <TouchableOpacity
                     style={styles.deleteButton}
-                    onPress={() => {
-                      setSelectedProduct(null);
-                      setProducts((prevProducts) =>
-                        prevProducts.filter(
-                          (product) => product.id !== selectedProduct.id
-                        )
-                      );
+                    onPress={async () => {
+                      if (!selectedProduct) return;
+
+                      try {
+                        // Send delete request to backend
+                        const response = await fetch(`https://shelfmate-app.onrender.com/delete-item/${selectedProduct.id}`, {
+                          method: 'DELETE',
+                        });
+
+                        if (response.ok) {
+                          // Remove item from frontend state
+                          console.log('Deleting item with ID:', selectedProduct._id);
+                          setProducts((prevProducts) =>
+                            prevProducts.filter((product) => product.id !== selectedProduct.id)
+                          );
+                          setSelectedProduct(null);
+                        } else {
+                          const errorData = await response.json();
+                          console.error('Error deleting item:', errorData.message);
+                        }
+                      } catch (error) {
+                        console.error('Request failed:', error);
+                      }
                     }}
                   >
                     <Text style={styles.deleteButtonText}>Delete</Text>
                   </TouchableOpacity>
+
                 </>
               )}
             </View>
