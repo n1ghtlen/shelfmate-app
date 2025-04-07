@@ -152,3 +152,9 @@ app.listen(port, () => {
 app.use((req, res) => {
   res.status(404).send('Route not found');
 });
+
+app._router.stack.forEach((r) => {
+  if (r.route && r.route.path) {
+    console.log(`Registered route: ${r.route.path}`);
+  }
+});
