@@ -245,22 +245,36 @@ function ProductOverview({ route }) {
                     onPress={async () => {
                       if (!selectedProduct) return;
 
+                      console.log('Selected product:', selectedProduct);
+                      console.log('Attempting to delete product with ID:', selectedProduct.id);
+
                       try {
-                        // Send delete request to backend
                         const response = await fetch(`https://shelfmate-app.onrender.com/delete-item/${selectedProduct.id}`, {
                           method: 'DELETE',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
                         });
-
+                      
+                        const rawText = await response.text();  // Get the raw response text
+                      
                         if (response.ok) {
-                          // Remove item from frontend state
-                          console.log('Deleting item with ID:', selectedProduct._id);
-                          setProducts((prevProducts) =>
-                            prevProducts.filter((product) => product.id !== selectedProduct.id)
-                          );
-                          setSelectedProduct(null);
+                          let responseData;
+                          try {
+                            // Try parsing the raw text as JSON
+                            responseData = JSON.parse(rawText);
+                            console.log('Deleted item:', responseData);
+                            // Proceed with frontend updates
+                            setProducts((prevProducts) =>
+                              prevProducts.filter((product) => product.id !== selectedProduct.id)
+                            );
+                            setSelectedProduct(null);
+                          } catch (parseErr) {
+                            console.error('Error parsing response as JSON:', parseErr);
+                            console.error('Raw response text:', rawText);  // Log raw text for debugging
+                          }
                         } else {
-                          const errorData = await response.json();
-                          console.error('Error deleting item:', errorData.message);
+                          console.error('Error deleting item:', rawText);
                         }
                       } catch (error) {
                         console.error('Request failed:', error);
@@ -269,6 +283,7 @@ function ProductOverview({ route }) {
                   >
                     <Text style={styles.deleteButtonText}>Delete</Text>
                   </TouchableOpacity>
+
 
                 </>
               )}
