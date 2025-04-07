@@ -94,10 +94,11 @@ app.post('/add-item', async (req, res) => {
     console.log("New item saved:", newItem);
     res.status(201).json({ message: "Item added successfully!", item: newItem });
 
-} catch (error) {
+  } catch (error) {
     console.error("Error adding item:", error);
     res.status(500).json({ message: "Error adding item", error: error.message });
-}
+  }
+});
 
 // Route to get items (optional: filter by container)
 app.get('/items', async (req, res) => {
