@@ -8,7 +8,6 @@ import fetch from 'node-fetch';
 dotenv.config(); // Load environment variables
 
 const app = express();
-const express = require(express);
 
 // Use the port from environment variables, otherwise default to 5001
 const port = process.env.PORT || 5001; 
@@ -147,5 +146,4 @@ app.listen(port, () => {
 // Handle unknown routes
 app.use((req, res) => {
   res.status(404).send('Route not found');
-});
 });
