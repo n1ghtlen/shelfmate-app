@@ -16,34 +16,72 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
   },
-  welcome: {
-    fontSize: 34,
-    fontWeight: "bold",
-    color: "#A86000",
-    textAlign: "center",
-  },
-  logo: {
-    width: 300,
-    height: 300,
-    objectFit: "contain",
-  },
-  canary: {},
+ //WELCOME SCREEN:
+ 
+backgroundContainer: {
+  flex: 1,
+  backgroundColor: 'green',
+ },
+ whiteHalfCircle: {
+  position: 'absolute',
+  top: 0,
+  left: -width / 2, // Offsets the half circle to center it
+  width: width * 2,
+  height: width,
+  borderBottomLeftRadius: width,
+  borderBottomRightRadius: width,
+  backgroundColor: 'white',
+ },
+ contentContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+ },
+ // Your existing styles (unchanged)
+ container: {
+  flex: 1,
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+ },
+ welcome: {
+  fontSize: 44,
+  fontWeight: 'bold',
+  color: '#ffffff',
+  paddingTop: 100,
+  textAlign: 'center',
+ },
+ subText: {
+  fontSize: 18,
+  color: '#ffffff',
+  textAlign: 'center',
+  paddingTop: 10,
+  paddingHorizontal: 60,
+ },
+ canary: {
+  paddingTop: 100,
+  width: 100,        // Adjust this value to change the size
+  height: 310, // Remove any fixed height
+  aspectRatio: 1,    // Maintains a square image box (change this if your image is not square)
+ },
+ bottomTextContainer: {
+  position: 'absolute',
+  bottom: 40,
+  width: '100%',
+  alignItems: 'center',
+ },
+ bottomText: {
+  fontSize: 18,
+  color: '#fff',
+  textAlign: 'center',
+ },
+ 
+   
   pantry: {
     width: "300",
     height: "600", // Makes sure the image fills the available space
     objectFit: "contain",
   },
-  bottomTextContainer: {
-    position: "absolute",
-    bottom: 40,
-    alignItems: "center",
-  },
-  bottomText: {
-    fontSize: 18,
-    fontWeight: "normal",
-    color: "#555",
-    textAlign: "center",
-  },
+ 
   topTextBackground: {
     backgroundColor: "#025400",
     padding: 16, // Add padding inside the background container
