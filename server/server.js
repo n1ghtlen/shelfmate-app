@@ -119,6 +119,28 @@ app.get('/items', async (req, res) => {
   }
 });
 
+// Route to update item quantity
+app.patch('/update-quantity/:id', async (req, res) => {
+  const { quantity } = req.body;
+
+  try {
+    const updatedItem = await Item.findByIdAndUpdate(
+      req.params.id,
+      { quantity },
+      { new: true }
+    );
+
+    if (!updatedItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.json(updatedItem);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error updating quantity' });
+  }
+});
+
 // Route to delete an item
 app.delete('/delete-item/:id', async (req, res) => {
   const { id } = req.params;

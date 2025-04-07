@@ -256,57 +256,99 @@ function ProductOverview({ route }) {
                       },
                     ]}
                   >
+                    {/* Decrease Button */}
                     <TouchableOpacity
                       style={[styles.quantityButton, { marginRight: 10 }]}
-                      onPress={() => {
-                        // Decrease quantity
-                        if (selectedProduct.quantity > 1) {
-                          // Decrease logic does not apply if quantity is 1
+                      onPress={async () => {
+                        const newQuantity = selectedProduct.quantity - 1;
+
+                        if (newQuantity >= 1) {
+                          // Update UI
                           setSelectedProduct((prev) => ({
                             ...prev,
-                            quantity: prev.quantity - 1,
+                            quantity: newQuantity,
                           }));
-                          // prevProducts is the previous state of products
                           setProducts((prevProducts) =>
                             prevProducts.map((product) =>
                               product.id === selectedProduct.id
-                                ? { ...product, quantity: product.quantity - 1 }
+                                ? { ...product, quantity: newQuantity }
                                 : product
                             )
                           );
+
+                          // Update quantity in DB
+                          try {
+                            await fetch(`https://shelfmate-app.onrender.com/update-quantity/${selectedProduct.id}`, {
+                              method: "PATCH",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({ quantity: newQuantity }),
+                            });
+                          } catch (error) {
+                            console.error("Error updating quantity:", error);
+                          }
                         } else {
-                          // The product will be deleted if the quantity was 1
+                          // Remove from UI
                           setSelectedProduct(null);
                           setProducts((prevProducts) =>
-                            prevProducts.filter(
-                              (product) => product.id !== selectedProduct.id
-                            )
+                            prevProducts.filter((product) => product.id !== selectedProduct.id)
                           );
+
+                          // Delete from DB
+                          try {
+                            await fetch(`https://shelfmate-app.onrender.com/delete-item/${selectedProduct.id}`, {
+                              method: "DELETE",
+                            });
+                          } catch (error) {
+                            console.error("Error deleting item:", error);
+                          }
                         }
                       }}
                     >
                       <Text style={styles.quantityButtonText}>-</Text>
                     </TouchableOpacity>
+
+                    {/* Quantity Display */}
+                    <Text>{selectedProduct.quantity}</Text>
+
+                    {/* Increase Button */}
                     <TouchableOpacity
                       style={[styles.quantityButton, { marginLeft: 10 }]}
-                      onPress={() => {
-                        // Increase quantity
+                      onPress={async () => {
+                        const newQuantity = selectedProduct.quantity + 1;
+
+                        // Update UI
                         setSelectedProduct((prev) => ({
                           ...prev,
-                          quantity: prev.quantity + 1,
+                          quantity: newQuantity,
                         }));
                         setProducts((prevProducts) =>
                           prevProducts.map((product) =>
                             product.id === selectedProduct.id
-                              ? { ...product, quantity: product.quantity + 1 }
+                              ? { ...product, quantity: newQuantity }
                               : product
                           )
                         );
+
+                        // Update quantity in DB
+                        try {
+                          await fetch(`https://shelfmate-app.onrender.com/update-quantity/${selectedProduct.id}`, {
+                            method: "PATCH",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ quantity: newQuantity }),
+                          });
+                        } catch (error) {
+                          console.error("Error updating quantity:", error);
+                        }
                       }}
                     >
                       <Text style={styles.quantityButtonText}>+</Text>
                     </TouchableOpacity>
                   </View>
+
 
                   {/* Delete Button */}
                   <TouchableOpacity
