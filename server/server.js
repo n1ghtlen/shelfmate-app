@@ -55,6 +55,10 @@ async function getAllergens(barcode) {
   }
 }
 
+app.get('/', (req, res) => {
+  res.send('Server is alive');
+});
+
 // Route to Add Item
 app.post('/add-item', async (req, res) => {
   const { container, productName, barcode, quantity, expirationDate, image } = req.body;
