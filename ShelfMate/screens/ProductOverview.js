@@ -80,6 +80,16 @@ function ProductOverview({ route }) {
     (a.name || "").localeCompare(b.name || "")
   );
 
+  // Filter products expired (before today)
+const expiredProducts = sortedProducts.filter((product) => {
+  if (product.expiry === "No date available") return false;
+
+  const [month, day, year] = product.expiry.split("/").map(Number);
+  const expiryDate = new Date(year, month - 1, day);
+
+  return expiryDate < today; // Expired products are before today
+});
+
   // Filter products expiring soon (before or on today)
   const today = new Date();
   const expiringSoon = sortedProducts.filter((product) => {
@@ -109,6 +119,25 @@ function ProductOverview({ route }) {
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <>
+            {/* Expired Products Section */}
+            {expiredProducts.length > 0 && (
+              <>
+                <Text style={styles.sectionTitle}>Expired Products</Text>
+                <ScrollView horizontal>
+                  <View style={styles.gridRow}>
+                    {expiredProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onPress={() => setSelectedProduct(product)}
+                        showExpiry
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              </>
+            )}
+
             {/* Expiring Soon Section */}
             {expiringSoon.length > 0 && (
               <>
@@ -130,16 +159,18 @@ function ProductOverview({ route }) {
 
             {/* All Products Section */}
             <Text style={styles.sectionTitle}>All Products</Text>
-            <View style={styles.gridRow}>
-              {sortedProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onPress={() => setSelectedProduct(product)}
-                  showExpiry={false}
-                />
-              ))}
-            </View>
+            <ScrollView>
+              <View style={styles.gridRow}>
+                {sortedProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onPress={() => setSelectedProduct(product)}
+                    showExpiry={false}
+                  />
+                ))}
+              </View>
+            </ScrollView>
           </>
         )}
 
@@ -170,7 +201,7 @@ function ProductOverview({ route }) {
                     Expires: {selectedProduct.expiry}
                   </Text>
                   <Text style={styles.itemModalText}>
-                    {selectedProduct.allergens}
+                    Allergens present: {selectedProduct.allergens}
                   </Text>
                   <Text style={styles.itemModalText}>
                     Quantity: {selectedProduct.quantity}

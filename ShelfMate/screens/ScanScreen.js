@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { 
-  View, Text, Button, TouchableOpacity, Alert, ActivityIndicator, Image, 
+  View, Text, Button, TouchableOpacity, Alert, Image, 
   TextInput, Modal 
 } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
@@ -29,7 +29,7 @@ function ScanScreen() {
 
   const handleBarCodeScanned = async (barcode) => {
     if (!scanned) {
-      setScanned(true);
+      setScanned(true); // Lock the scanner so it doesn't trigger multiple times
       setLoading(true);
   
       const apiUrl = `https://world.openfoodfacts.org/api/v0/product/${barcode.data}.json`;
@@ -44,26 +44,41 @@ function ScanScreen() {
           setProductInfo({
             product_name: data.product.product_name || "Unknown Product",
             barcode: data.product.code,
-            image_url: data.product.image_url || null, // Store image URL
+            image_url: data.product.image_url || null,
           });
         } else {
-          Alert.alert("Product not found", "Unable to find product details.");
+          // Show alert if product is not found
+          Alert.alert("Product not found", "Unable to find product details.", [
+            {
+              text: "OK",
+              onPress: () => {
+                resetScanner(); // Reset after user acknowledges alert
+                setLoading(false); // Stop loading state after the alert
+              },
+            },
+          ]);
         }
       } catch (error) {
         console.error(error);
-        Alert.alert("Error", "Failed to fetch product data.");
-      } finally {
-        setLoading(false);
+        Alert.alert("Error", "Failed to fetch product data.", [
+          {
+            text: "OK",
+            onPress: () => {
+              resetScanner(); // Reset after error alert
+              setLoading(false); // Stop loading state after the alert
+            },
+          },
+        ]);
       }
     }
-  };  
-
+  };
+  
   const resetScanner = () => {
-    setScanned(false);
-    setProductInfo(null);
-    setContainer("pantry");
-    setQuantity(1);
-    setExpirationDate('');
+    setProductInfo(null); // Clear product info
+    setContainer("pantry"); // Reset container to default
+    setQuantity(1); // Reset quantity
+    setExpirationDate(''); // Reset expiration date
+    setScanned(false); // Allow scanning again after the user has acknowledged the alert
   };
 
   const handleAddToContainer = async () => {
@@ -97,7 +112,7 @@ function ScanScreen() {
   
       if (response.status === 201) { // Change 200 to 201 (successful creation)
 
-        Alert.alert("Success", `Added ${quantity} of ${productInfo.product_name} to the ${container}`);
+        Alert.alert(`Added ${quantity} of ${productInfo.product_name} to the ${container}!`);
         setModalVisible(false);
         resetScanner();
       } else {
@@ -161,10 +176,7 @@ function ScanScreen() {
         </CameraView>
       </View>
 
-      {/* Loading Indicator or Product Info */}
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : productInfo ? (
+      {productInfo ? (
         <View style={styles.productInfoContainer}>
           {productInfo.image_url && (
             <Image 
@@ -193,8 +205,7 @@ function ScanScreen() {
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Add to Container</Text>
-            <Text style={styles.modalLabel}>Select Container:</Text>
+            <Text style={styles.modalTitle}>Add to:</Text>
             <View style={styles.containerOptions}>
               {["pantry", "fridge", "freezer"].map((containerOption) => (
                 <TouchableOpacity
@@ -215,25 +226,15 @@ function ScanScreen() {
               keyboardType="numeric"
               value={quantity.toString()}
               onChangeText={(text) => setQuantity(text.replace(/[^0-9]/g, ""))}
-
-
-
-
-
-
-
-
-
-
             />
             <TextInput
               style={styles.expirationInput}
-              placeholder="Expiration Date (optional)"
+              placeholder="Expiration Date (mm/dd/yyyy)"
               value={expirationDate}
               onChangeText={setExpirationDate}
             />
             <TouchableOpacity onPress={handleAddToContainer} style={styles.addButton}>
-              <Text style={styles.addButtonText}>Add to {container}</Text>
+              <Text style={styles.addButtonText}>Add to the {container}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
               <Text style={styles.closeButtonText}>Cancel</Text>
