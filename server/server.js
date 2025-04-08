@@ -55,6 +55,10 @@ async function getAllergens(barcode) {
   }
 }
 
+app.get('/', (req, res) => {
+  res.send('Server is alive');
+});
+
 // Route to Add Item
 app.post('/add-item', async (req, res) => {
   const { container, productName, barcode, quantity, expirationDate, image } = req.body;
@@ -62,37 +66,43 @@ app.post('/add-item', async (req, res) => {
   console.log('Received payload:', req.body);
 
   try {
-    // Default to empty allergen data if not provided
-    let allergensData = "No allergens listed"; 
+    let allergensData = "No allergens listed"; // Default value
 
     if (barcode) {
-      // Fetch allergens data from OpenFoodFacts
-      const allergens = await getAllergens(barcode); // Fetch allergens from OpenFoodFacts
-      allergensData = allergens.allergens_from_ingredients || "No allergens listed"; // Use allergens_from_ingredients if available
+        console.log(`Fetching allergens for barcode: ${barcode}`);
+
+        try {
+            const allergens = await getAllergens(barcode);
+            console.log("Fetched allergens data:", allergens);
+
+            allergensData = allergens?.allergens_from_ingredients?.trim() || "No allergens listed";
+        } catch (fetchError) {
+            console.error("Error fetching allergens:", fetchError);
+        }
     }
 
-    // Create a new item with the fetched or default allergen data
+    // Create a new item object
     const newItem = new Item({
-      product_name: productName,
-      barcode,
-      quantity,
-      container,
-      expiration_date: expirationDate,
-      image,
-      allergens: allergensData // Store allergens as a string
+        product_name: productName.trim() || "Unnamed Product",
+        barcode: barcode?.trim() || "N/A",
+        quantity: quantity || 1,
+        container: container?.trim() || "pantry",
+        expiration_date: expirationDate || null,
+        image: image?.trim() || null,
+        allergens: allergensData
     });
 
     // Save the item to the database
     await newItem.save();
 
-    res.status(201).json({ message: 'Item added successfully!', item: newItem });
+    console.log("New item saved:", newItem);
+    res.status(201).json({ message: "Item added successfully!", item: newItem });
+
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error adding item', error: error.message });
+    console.error("Error adding item:", error);
+    res.status(500).json({ message: "Error adding item", error: error.message });
   }
 });
-
-
 
 // Route to get items (optional: filter by container)
 app.get('/items', async (req, res) => {
@@ -109,23 +119,51 @@ app.get('/items', async (req, res) => {
   }
 });
 
-// Route to delete an item
-app.delete('/delete-item/:id', async (req, res) => {
-  const { id } = req.params; // Get the item ID from the request parameters
-  console.log('Received delete request for ID:', id);
-  
+// Route to update item quantity
+app.patch('/update-quantity/:id', async (req, res) => {
+  const { quantity } = req.body;
+
   try {
-    const deletedItem = await Item.findByIdAndDelete(id); // Delete item from MongoDB
-    if (!deletedItem) {
+    const updatedItem = await Item.findByIdAndUpdate(
+      req.params.id,
+      { quantity },
+      { new: true }
+    );
+
+    if (!updatedItem) {
       return res.status(404).json({ message: 'Item not found' });
     }
 
-    res.json({ message: 'Item deleted successfully', item: deletedItem });
+    res.json(updatedItem);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error updating quantity' });
+  }
+});
+
+// Route to delete an item
+app.delete('/delete-item/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log('Received delete request for ID:', id);
+
+  try {
+    const deletedItem = await Item.findByIdAndDelete(id);
+
+    if (!deletedItem) {
+      return res.status(404).json({ message: 'Item not found' });  // Ensure it's JSON
+    }
+
+    // Success: return the deleted item and message in JSON format
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ message: 'Item deleted successfully', item: deletedItem });
   } catch (error) {
-    console.error('Error deleting item:', error);
+    console.error("Error deleting item:", error);
+    // Ensure the error message is returned as JSON
+    res.setHeader('Content-Type', 'application/json');
     res.status(500).json({ message: 'Error deleting item', error: error.message });
   }
 });
+
 
 // Start the server
 app.listen(port, () => {
@@ -137,6 +175,8 @@ app.use((req, res) => {
   res.status(404).send('Route not found');
 });
 
-
-
-
+app._router.stack.forEach((r) => {
+  if (r.route && r.route.path) {
+    console.log(`Registered route: ${r.route.path}`);
+  }
+});

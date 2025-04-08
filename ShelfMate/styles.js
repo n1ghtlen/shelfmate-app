@@ -285,6 +285,7 @@ backgroundContainer: {
   },
   cameraContainer: {
     flex: 1, // Allow the container to take up full screen
+    height: "100%",
     justifyContent: "flex-start", // Start from top for camera view
     backgroundColor: "black",
   },
@@ -490,7 +491,7 @@ backgroundContainer: {
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 15,
-    paddingLeft: 10,
+    padding: 10,
   },
   quantityButton: {
     backgroundColor: "#048C00",
@@ -526,7 +527,7 @@ backgroundContainer: {
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 15,
-    paddingLeft: 10,
+    padding: 10,
   },
   addButton: {
     backgroundColor: "#048C00",

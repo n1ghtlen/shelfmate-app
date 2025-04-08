@@ -34,14 +34,34 @@ function ProductOverview({ route }) {
           "https://shelfmate-app.onrender.com/items"
         );
         const data = await response.json();
-
+  
         console.log("Raw Data:", data);
-
+  
         const formattedData = data.map((product) => {
-          const expirationDate = product.expiration_date;
+          let rawDate = product.expiration_date?.$date || product.expiration_date;
+        
+          // Log the raw expiration date for debugging
+          console.log("Raw expiration date:", rawDate);
+        
+          // Check if the date is in a 2-digit year format (e.g., 5/25/25)
+          if (rawDate && rawDate.match(/\d{1,2}\/\d{1,2}\/\d{2}$/)) {
+            const [month, day, year] = rawDate.split('/');
+            // Convert 2-digit year to 4-digit year (assuming 20xx)
+            rawDate = `${month}/${day}/20${year}`;
+            console.log("Converted 2-digit year:", rawDate);
+          }
+        
+          // Manually parse the date to ensure it's in the correct format
+          const [month, day, year] = rawDate.split('/');
+          const parsedDate = new Date(year, month - 1, day); // Month is 0-indexed in JavaScript
+        
+          // Log the parsed date for debugging
+          console.log("Parsed date:", parsedDate);
+        
+          // Check if the parsed date is valid
           const formattedExpirationDate =
-            expirationDate && !isNaN(new Date(expirationDate).getTime())
-              ? new Date(expirationDate).toLocaleDateString("en-US", {
+            !isNaN(parsedDate.getTime())
+              ? parsedDate.toLocaleDateString("en-US", {
                   month: "2-digit",
                   day: "2-digit",
                   year: "numeric",
@@ -54,21 +74,25 @@ function ProductOverview({ route }) {
             image: getImageSource(product),
             expiry: formattedExpirationDate,
             quantity: product.quantity || 1,
-            container: product.container || "pantry", // Ensure the container is included
+            container: product.container || "pantry",
             allergens: product.allergens || "No allergens listed",
           };
         });
         
         setProducts(formattedData);
+        
+        
+        
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchProducts();
   }, []);
+  
 
   // Filter products based on the selected container
   const filteredProducts = products.filter(
@@ -80,16 +104,40 @@ function ProductOverview({ route }) {
     (a.name || "").localeCompare(b.name || "")
   );
 
-  // Filter products expiring soon (before or on today)
   const today = new Date();
+  today.setHours(0, 0, 0, 0); // Zero out time for accurate comparisons
+  
+  const soonCutoffDate = new Date(today); // Clone today
+  soonCutoffDate.setDate(soonCutoffDate.getDate() + 7); // Products expiring within the next 7 days
+  
+  // Filter expired products (strictly before today)
+  const expiredProducts = sortedProducts.filter((product) => {
+    if (product.expiry === "No date available") return false;
+  
+    const [month, day, year] = product.expiry.split("/").map(Number);
+    const expiryDate = new Date(year, month - 1, day);
+    expiryDate.setHours(0, 0, 0, 0);
+  
+    console.log(`Checking: ${product.name}`);
+    console.log(`  Expiry: ${expiryDate.toDateString()}`);
+    console.log(`  Today: ${today.toDateString()}`);
+    console.log(`  Cutoff: ${soonCutoffDate.toDateString()}`);  
+
+    return expiryDate < today;
+  });
+  
+  // Filter expiring soon (from today through the next 7 days, not including expired)
   const expiringSoon = sortedProducts.filter((product) => {
     if (product.expiry === "No date available") return false;
   
     const [month, day, year] = product.expiry.split("/").map(Number);
     const expiryDate = new Date(year, month - 1, day);
+    expiryDate.setHours(0, 0, 0, 0);
   
-    return expiryDate <= today;
+    return expiryDate >= today && expiryDate <= soonCutoffDate;
   });
+  
+
   
 
   return (
@@ -103,16 +151,35 @@ function ProductOverview({ route }) {
           <Text style={styles.backButton}>Back</Text>
         </TouchableOpacity>
       </View>
-
+      <ScrollView>
       <View style={styles.productContainer}>
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <>
+            {/* Expired Products Section */}
+            {expiredProducts.length > 0 && (
+              <>
+                <Text style={styles.sectionTitle}>Expired Products</Text>
+                <ScrollView horizontal>
+                  <View style={styles.gridRow}>
+                    {expiredProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onPress={() => setSelectedProduct(product)}
+                        showExpiry
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              </>
+            )}
+
             {/* Expiring Soon Section */}
             {expiringSoon.length > 0 && (
               <>
-                <Text style={styles.sectionTitle}>Products Expiring Soon</Text>
+                <Text style={styles.sectionTitle}>Expiring Soon</Text>
                 <ScrollView horizontal>
                   <View style={styles.gridRow}>
                     {expiringSoon.map((product) => (
@@ -130,16 +197,18 @@ function ProductOverview({ route }) {
 
             {/* All Products Section */}
             <Text style={styles.sectionTitle}>All Products</Text>
-            <View style={styles.gridRow}>
-              {sortedProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onPress={() => setSelectedProduct(product)}
-                  showExpiry={false}
-                />
-              ))}
-            </View>
+            <ScrollView>
+              <View style={styles.gridRow}>
+                {sortedProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onPress={() => setSelectedProduct(product)}
+                    showExpiry={false}
+                  />
+                ))}
+              </View>
+            </ScrollView>
           </>
         )}
 
@@ -170,7 +239,7 @@ function ProductOverview({ route }) {
                     Expires: {selectedProduct.expiry}
                   </Text>
                   <Text style={styles.itemModalText}>
-                    {selectedProduct.allergens}
+                    Allergens present: {selectedProduct.allergens}
                   </Text>
                   <Text style={styles.itemModalText}>
                     Quantity: {selectedProduct.quantity}
@@ -187,57 +256,99 @@ function ProductOverview({ route }) {
                       },
                     ]}
                   >
+                    {/* Decrease Button */}
                     <TouchableOpacity
                       style={[styles.quantityButton, { marginRight: 10 }]}
-                      onPress={() => {
-                        // Decrease quantity
-                        if (selectedProduct.quantity > 1) {
-                          // Decrease logic does not apply if quantity is 1
+                      onPress={async () => {
+                        const newQuantity = selectedProduct.quantity - 1;
+
+                        if (newQuantity >= 1) {
+                          // Update UI
                           setSelectedProduct((prev) => ({
                             ...prev,
-                            quantity: prev.quantity - 1,
+                            quantity: newQuantity,
                           }));
-                          // prevProducts is the previous state of products
                           setProducts((prevProducts) =>
                             prevProducts.map((product) =>
                               product.id === selectedProduct.id
-                                ? { ...product, quantity: product.quantity - 1 }
+                                ? { ...product, quantity: newQuantity }
                                 : product
                             )
                           );
+
+                          // Update quantity in DB
+                          try {
+                            await fetch(`https://shelfmate-app.onrender.com/update-quantity/${selectedProduct.id}`, {
+                              method: "PATCH",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({ quantity: newQuantity }),
+                            });
+                          } catch (error) {
+                            console.error("Error updating quantity:", error);
+                          }
                         } else {
-                          // The product will be deleted if the quantity was 1
+                          // Remove from UI
                           setSelectedProduct(null);
                           setProducts((prevProducts) =>
-                            prevProducts.filter(
-                              (product) => product.id !== selectedProduct.id
-                            )
+                            prevProducts.filter((product) => product.id !== selectedProduct.id)
                           );
+
+                          // Delete from DB
+                          try {
+                            await fetch(`https://shelfmate-app.onrender.com/delete-item/${selectedProduct.id}`, {
+                              method: "DELETE",
+                            });
+                          } catch (error) {
+                            console.error("Error deleting item:", error);
+                          }
                         }
                       }}
                     >
                       <Text style={styles.quantityButtonText}>-</Text>
                     </TouchableOpacity>
+
+                    {/* Quantity Display */}
+                    <Text>{selectedProduct.quantity}</Text>
+
+                    {/* Increase Button */}
                     <TouchableOpacity
                       style={[styles.quantityButton, { marginLeft: 10 }]}
-                      onPress={() => {
-                        // Increase quantity
+                      onPress={async () => {
+                        const newQuantity = selectedProduct.quantity + 1;
+
+                        // Update UI
                         setSelectedProduct((prev) => ({
                           ...prev,
-                          quantity: prev.quantity + 1,
+                          quantity: newQuantity,
                         }));
                         setProducts((prevProducts) =>
                           prevProducts.map((product) =>
                             product.id === selectedProduct.id
-                              ? { ...product, quantity: product.quantity + 1 }
+                              ? { ...product, quantity: newQuantity }
                               : product
                           )
                         );
+
+                        // Update quantity in DB
+                        try {
+                          await fetch(`https://shelfmate-app.onrender.com/update-quantity/${selectedProduct.id}`, {
+                            method: "PATCH",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ quantity: newQuantity }),
+                          });
+                        } catch (error) {
+                          console.error("Error updating quantity:", error);
+                        }
                       }}
                     >
                       <Text style={styles.quantityButtonText}>+</Text>
                     </TouchableOpacity>
                   </View>
+
 
                   {/* Delete Button */}
                   <TouchableOpacity
@@ -245,22 +356,36 @@ function ProductOverview({ route }) {
                     onPress={async () => {
                       if (!selectedProduct) return;
 
+                      console.log('Selected product:', selectedProduct);
+                      console.log('Attempting to delete product with ID:', selectedProduct.id);
+
                       try {
-                        // Send delete request to backend
                         const response = await fetch(`https://shelfmate-app.onrender.com/delete-item/${selectedProduct.id}`, {
                           method: 'DELETE',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
                         });
-
+                      
+                        const rawText = await response.text();  // Get the raw response text
+                      
                         if (response.ok) {
-                          // Remove item from frontend state
-                          console.log('Deleting item with ID:', selectedProduct._id);
-                          setProducts((prevProducts) =>
-                            prevProducts.filter((product) => product.id !== selectedProduct.id)
-                          );
-                          setSelectedProduct(null);
+                          let responseData;
+                          try {
+                            // Try parsing the raw text as JSON
+                            responseData = JSON.parse(rawText);
+                            console.log('Deleted item:', responseData);
+                            // Proceed with frontend updates
+                            setProducts((prevProducts) =>
+                              prevProducts.filter((product) => product.id !== selectedProduct.id)
+                            );
+                            setSelectedProduct(null);
+                          } catch (parseErr) {
+                            console.error('Error parsing response as JSON:', parseErr);
+                            console.error('Raw response text:', rawText);  // Log raw text for debugging
+                          }
                         } else {
-                          const errorData = await response.json();
-                          console.error('Error deleting item:', errorData.message);
+                          console.error('Error deleting item:', rawText);
                         }
                       } catch (error) {
                         console.error('Request failed:', error);
@@ -270,12 +395,14 @@ function ProductOverview({ route }) {
                     <Text style={styles.deleteButtonText}>Delete</Text>
                   </TouchableOpacity>
 
+
                 </>
               )}
             </View>
           </View>
         </Modal>
       </View>
+      </ScrollView>
     </>
   );
 }
