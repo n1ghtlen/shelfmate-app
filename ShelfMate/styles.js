@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 0.9)",
+    paddingTop: 0, 
   },
   questionnaireContainer: {
     alignItems: "center",
@@ -195,7 +196,7 @@ backgroundContainer: {
     flexDirection: "row",
     alignItems: "center",
     position: "absolute", // Absolute positioning to keep it above the camera
-    top: 40, // Space from the top of the screen
+    top: 20, // Space from the top of the screen
     left: 10, // Space from the left
     zIndex: 1, // Make sure it appears above the camera
     padding: 10, // Add some padding to the button
@@ -204,7 +205,6 @@ backgroundContainer: {
     fontSize: 18,
     color: "#000",
     fontWeight: "bold",
-    marginTop: 10,
   },
   returnButtonContainer: {
     flexDirection: "row",
@@ -608,67 +608,80 @@ backgroundContainer: {
     textAlign: "center",
     marginBottom: 8,
   },
+
+  //Recipe Details
   detailImage: {
     width: width,
     height: height / 3,
-    marginBottom: 20,
+    marginBottom: 16,
   },
-  recipeHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-    flex: 1,
-    textAlign: "center",
-  },
+  
+  
   recipeTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-    textAlign: "center",
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#333',
+    flex: 1,
+    textAlign: 'left',
+    paddingHorizontal: 20,
   },
+  
+  heartOverlay: {
+    position: 'absolute',
+    top: 60,
+    right: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 24,
+    padding: 8,
+    zIndex: 10,
+  },
+
+  backOverlay: {
+    position: 'absolute',
+    top: 60,
+    left: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 24,
+    padding: 8,
+    zIndex: 10,
+  },
+  
   ingredientsTitle: {
-    paddingTop: 20,
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 10,
     marginBottom: 10,
-    textAlign: "center",
+    paddingHorizontal: 20,
+    textAlign: 'left',
   },
+  
   ingredient: {
     fontSize: 16,
-    color: "#555",
-    marginBottom: 5,
-    textAlign: "center",
+    color: '#555',
+    marginBottom: 6,
+    paddingHorizontal: 30,
+    textAlign: 'left',
   },
+  
   instructionsTitle: {
-    paddingTop: 20,
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
+    fontWeight: 'bold',
+    color: '#333',
     marginTop: 20,
     marginBottom: 10,
-    textAlign: "center",
+    paddingHorizontal: 20,
+    textAlign: 'left',
   },
+  
   instructionsText: {
     fontSize: 16,
-    color: "#555",
+    color: '#555',
     lineHeight: 24,
-    textAlign: "center",
-    padding: 20,
-  },
-  heartIconContainer: {
-    padding: 5,
-    backgroundColor: "transparent",
-  },
-  heartButton: {
-    padding: 20,
-  },
+    marginBottom: 12,
+    paddingHorizontal: 30,
+    textAlign: 'left',
+  },  
 });
 
 export default styles;
