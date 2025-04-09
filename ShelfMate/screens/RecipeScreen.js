@@ -72,7 +72,7 @@ const RecipeScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <ImageBackground source={require("../assets/background-2.png")} style={styles.backgroundImage}>
+      
         {selectedRecipe ? (
           <RecipeDetails
             meal={selectedRecipe}
@@ -131,7 +131,6 @@ const RecipeScreen = () => {
             )}
           </View>
         )}
-      </ImageBackground>
     </View>
   );
 };
