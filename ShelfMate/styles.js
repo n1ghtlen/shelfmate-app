@@ -232,57 +232,104 @@ backgroundContainer: {
     backgroundColor: "#048C00",
     borderRadius: 38,
   },
+
+  //Recipes Main Page
+
+  header: {
+    paddingTop: 60,
+    marginBottom: 10,
+  },
+
   headerTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    flex: 1,
-    backgroundColor: "fff",
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
   },
+
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginVertical: 16,
-    textAlign: "left",
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333',
+    marginLeft: 20,
+    marginVertical: 14,
+    paddingTop: 20,
   },
+
+  savedRecipesWrapper: {
+    height: width * 0.55 + 20,
+  },
+
   scrollViewContent: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+    paddingLeft: 20,
+    paddingRight: 10,
+    height: width * 0.55,
   },
+
   imageContainer: {
-    position: "relative",
+    width: width * 0.7,
+    height: width * 0.5,
+    borderRadius: 16,
+    overflow: 'hidden',
     marginRight: 16,
+    backgroundColor: '#f5f5f5',
+    position: 'relative',
   },
-  image: {
-    width: width * 0.25,
-    height: width * 0.25,
-    borderRadius: 10,
+
+  savedRecipeImage: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
+
+  discoverImage: {
+    width: '100%',
+    height: width * 0.3,
+    borderRadius: 12,
+    resizeMode: 'cover',
+  },
+
+  gradientOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: '50%',
+    justifyContent: 'flex-end',
+    borderRadius: 16,
+  },
+
   imageTitle: {
-    position: "absolute",
-    bottom: 10,
-    left: 10,
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-    backgroundColor: "black",
+    position: 'absolute',
+    bottom: 12,
+    left: 12,
+    right: 12,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'left',
+    backgroundColor: 'transparent',
   },
+
   gridContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    padding: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingBottom: 40,
   },
+
   gridItem: {
-    width: "30%",
-    marginBottom: 16,
+    width: width * 0.43,
+    marginBottom: 20,
+    borderRadius: 12,
+    backgroundColor: '#f9f9f9',
+    overflow: 'hidden',
   },
-  gridImage: {
-    width: "100%",
-    height: width * 0.25,
-    borderRadius: 10,
-  },
+
+
+  //camera
+
   cameraContainer: {
     flex: 1, // Allow the container to take up full screen
     height: "100%",
