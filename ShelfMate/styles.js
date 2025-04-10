@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   prpdBackButtonContainer: {
-    padding: 10,
+    paddingTop:10,
   },
   prpdBackButton: {
     fontSize: 18,
@@ -607,7 +607,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   
-  
+  //recipie details
   recipeTitle: {
     fontSize: 26,
     fontWeight: 'bold',
@@ -617,25 +617,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   
-  heartOverlay: {
-    position: 'absolute',
-    top: 60,
-    right: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: 24,
-    padding: 8,
-    zIndex: 10,
-  },
-
-  backOverlay: {
-    position: 'absolute',
-    top: 60,
-    left: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: 24,
-    padding: 8,
-    zIndex: 10,
-  },
   
   ingredientsTitle: {
     fontSize: 20,
@@ -672,7 +653,38 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 30,
     textAlign: 'left',
-  },  
+  },
+  heartOverlay: {
+    position: 'absolute',
+    top: 60,
+    right: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 24,
+    padding: 8,
+    zIndex: 10,
+  },
+
+  backOverlay: {
+    position: 'absolute',
+    top: height * 0.05, // Responsive position for back button
+    left: width * 0.05, // Responsive position for back button
+    width: width * 0.12, // Responsive size of the button
+    height: width * 0.12, // Responsive size of the button
+    borderRadius: (width * 0.12) / 2, // Make it circular
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', // Light background with transparency
+    justifyContent: 'center', // Centers the icon
+    alignItems: 'center', // Centers the icon
+    zIndex: 10, // Ensure it's on top of other elements
+  },
+
+  // Back Button Text Style (Arrow)
+  backButton: {
+    fontSize: 29, // Adjust size as necessary
+    color: "#333", // Dark color for the arrow
+  },
+
+
+
 });
 
 export default styles;

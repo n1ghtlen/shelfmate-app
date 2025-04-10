@@ -132,12 +132,12 @@ function ProductOverview({ route }) {
     <>
       {/* Back Button */}
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButtonContainer}
-        >
-          <Text style={styles.backButton}>Back</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+      onPress={() => navigation.goBack()}
+      style={styles.backOverlay}
+    >
+      <Text style={styles.backButton}>{"←"}</Text>
+    </TouchableOpacity>
       </View>
       <ScrollView>
       <View style={styles.productContainer}>
