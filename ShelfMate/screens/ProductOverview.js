@@ -40,23 +40,16 @@ function ProductOverview({ route }) {
         const formattedData = data.map((product) => {
           let rawDate = product.expiration_date?.$date || product.expiration_date;
         
-          // Log the raw expiration date for debugging
-          console.log("Raw expiration date:", rawDate);
-        
           // Check if the date is in a 2-digit year format (e.g., 5/25/25)
           if (rawDate && rawDate.match(/\d{1,2}\/\d{1,2}\/\d{2}$/)) {
             const [month, day, year] = rawDate.split('/');
             // Convert 2-digit year to 4-digit year (assuming 20xx)
             rawDate = `${month}/${day}/20${year}`;
-            console.log("Converted 2-digit year:", rawDate);
           }
         
           // Manually parse the date to ensure it's in the correct format
           const [month, day, year] = rawDate.split('/');
           const parsedDate = new Date(year, month - 1, day); // Month is 0-indexed in JavaScript
-        
-          // Log the parsed date for debugging
-          console.log("Parsed date:", parsedDate);
         
           // Check if the parsed date is valid
           const formattedExpirationDate =
@@ -117,11 +110,6 @@ function ProductOverview({ route }) {
     const [month, day, year] = product.expiry.split("/").map(Number);
     const expiryDate = new Date(year, month - 1, day);
     expiryDate.setHours(0, 0, 0, 0);
-  
-    console.log(`Checking: ${product.name}`);
-    console.log(`  Expiry: ${expiryDate.toDateString()}`);
-    console.log(`  Today: ${today.toDateString()}`);
-    console.log(`  Cutoff: ${soonCutoffDate.toDateString()}`);  
 
     return expiryDate < today;
   });
