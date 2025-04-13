@@ -36,14 +36,10 @@ function HomeScreen() {
         <View style={{ flex: 1 }}>
             <View style={styles.container}>
                 {/* Search Box */}
-                <View style={styles.searchBox}>
-                    <TextInput
-                        style={styles.inputText}
-                        value={searchQuery}
-                        onChangeText={(text) => setSearchQuery(text)}
-                        placeholder="Search item..."
-                        autoCapitalize="none"
-                    />
+                <View style={styles.scanToAddContainer}>
+                    <Text style={styles.scanToAdd}>
+                        Scan items to add them to your inventory
+                    </Text>
                 </View>
                 
                 {/* Pantry Image */}

@@ -106,12 +106,10 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     marginBottom: 50,
   },
-  searchBox: {
+  scanToAddContainer: {
     height: 40,
     borderColor: "#ccc",
     backgroundColor: "#fff",
-    borderWidth: 1,
-    borderRadius: 5,
     width: "90%",
     paddingLeft: 10,
     marginTop: 50,
@@ -128,6 +126,10 @@ const styles = StyleSheet.create({
   },
   inputText: {
     paddingTop: 10,
+  },
+  scanToAdd: {
+    paddingTop: 20,
+    textAlign: "center",
   },
   header: {
     paddingTop: 60,

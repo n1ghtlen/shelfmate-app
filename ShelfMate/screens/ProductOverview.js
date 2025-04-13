@@ -142,7 +142,7 @@ function ProductOverview({ route }) {
       <ScrollView>
       <View style={styles.productContainer}>
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="green" />
         ) : (
           <>
             {/* Expired Products Section */}
