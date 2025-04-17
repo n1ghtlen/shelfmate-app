@@ -40,26 +40,41 @@ function ProductOverview({ route }) {
         const formattedData = data.map((product) => {
           let rawDate = product.expiration_date?.$date || product.expiration_date;
         
+          // Ensure rawDate is a string and not null/undefined
+          if (typeof rawDate !== "string") {
+            return {
+              id: product._id?.$oid || product._id || Math.random().toString(),
+              name: product.product_name || "Unnamed Product",
+              image: getImageSource(product),
+              expiry: "No date available",
+              quantity: product.quantity || 1,
+              container: product.container || "pantry",
+              allergens: product.allergens || "No allergens listed",
+            };
+          }
+        
           // Check if the date is in a 2-digit year format (e.g., 5/25/25)
-          if (rawDate && rawDate.match(/\d{1,2}\/\d{1,2}\/\d{2}$/)) {
+          if (rawDate.match(/\d{1,2}\/\d{1,2}\/\d{2}$/)) {
             const [month, day, year] = rawDate.split('/');
-            // Convert 2-digit year to 4-digit year (assuming 20xx)
             rawDate = `${month}/${day}/20${year}`;
           }
         
-          // Manually parse the date to ensure it's in the correct format
-          const [month, day, year] = rawDate.split('/');
-          const parsedDate = new Date(year, month - 1, day); // Month is 0-indexed in JavaScript
+          let formattedExpirationDate = "No date available";
         
-          // Check if the parsed date is valid
-          const formattedExpirationDate =
-            !isNaN(parsedDate.getTime())
-              ? parsedDate.toLocaleDateString("en-US", {
-                  month: "2-digit",
-                  day: "2-digit",
-                  year: "numeric",
-                })
-              : "No date available";
+          // Parse and format the date
+          const dateParts = rawDate.split('/');
+          if (dateParts.length === 3) {
+            const [month, day, year] = dateParts;
+            const parsedDate = new Date(year, month - 1, day); // Month is 0-indexed
+        
+            if (!isNaN(parsedDate.getTime())) {
+              formattedExpirationDate = parsedDate.toLocaleDateString("en-US", {
+                month: "2-digit",
+                day: "2-digit",
+                year: "numeric",
+              });
+            }
+          }
         
           return {
             id: product._id?.$oid || product._id || Math.random().toString(),
@@ -71,6 +86,7 @@ function ProductOverview({ route }) {
             allergens: product.allergens || "No allergens listed",
           };
         });
+        
         
         setProducts(formattedData);
         
