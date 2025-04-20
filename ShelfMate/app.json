@@ -1,37 +1,54 @@
 {
-    "expo": {
-      "name": "ShelfMate",
-      "slug": "ShelfMate",
-      "version": "1.0.0",
-      "sdkVersion": "1.0.0",
-      "orientation": "portrait",
-      "icon": "./assets/icon.png",
-      "userInterfaceStyle": "light",
-      "newArchEnabled": true,
-      "splash": {
-        "image": "./assets/splash-icon.png",
-        "resizeMode": "contain",
+  "expo": {
+    "name": "ShelfMate",
+    "slug": "ShelfMate",
+    "version": "1.0.0",
+    "sdkVersion": "52.0.46",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "We need access to your camera to scan barcodes."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "platforms": ["ios", "android"],
-      "ios": {
-        "supportsTablet": true,
-        "infoPlist": {
-          "NSCameraUsageDescription": "We need access to your camera to scan barcodes."
-        }
-      },
-      "android": {
-        "adaptiveIcon": {
-          "foregroundImage": "./assets/adaptive-icon.png",
-          "backgroundColor": "#ffffff"
-        },
-        "permissions": ["CAMERA"]
-      },
+      "permissions": [
+        "CAMERA",
+        "CAMERA"
+      ]
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c62b8e84-a0fe-4c26-8db3-482e649c5000"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c62b8e84-a0fe-4c26-8db3-482e649c5000"
     }
+  }
 }
